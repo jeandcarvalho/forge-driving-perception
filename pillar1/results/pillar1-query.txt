@@ -1,0 +1,235 @@
+================================================================================
+QUERY DO PILLAR 1 — o que existe, o que nao existe
+Coleção "All perception in one" · id <CARCARA_COLLECTION_ID> · 4.364 frames
+Levantado em 07/09/2026. Somente leitura do banco, do codigo e do manifest.
+================================================================================
+
+RESUMO EM UMA LINHA
+-------------------
+A QUERY ORIGINAL NAO ESTA PRESERVADA. O esquema do Mongo nao tem campo para ela
+e nenhum endpoint a grava. O que sobrevive e o RESULTADO (o conjunto exato de
+frames) e UM parametro, o espacamento, que deixou assinatura mensuravel nos
+dados: 30 m.
+
+
+--------------------------------------------------------------------------------
+1. POR QUE NAO ESTA PRESERVADA (evidencia de codigo)
+--------------------------------------------------------------------------------
+Modelo Prisma `Collection`
+  C:\Users\REPRO_USER\Documents\carcara\apps\api\prisma\schema.prisma:188-209
+  Campos persistidos: id, userId, name, description, createdAt, gps_spacing_m,
+  framesCount, train_acq_ids, test_acq_ids, curation_locked,
+  curation_min_distance_m, curation_frame_count, curation_generated_at,
+  curation_generated_by.
+  --> NAO EXISTE campo de query/filtros.
+
+Modelo `CollectionGroup` (schema.prisma:210-227)
+  Campos: collectionId, acq_id, secs[], activeSecs[], curationSecs[],
+  reviewedSecs[].
+  --> guarda o RESULTADO por aquisicao, nunca o criterio.
+
+Endpoint que popula a colecao
+  POST /collections/:collectionId/items/add-by-query
+  C:\Users\REPRO_USER\Documents\carcara\apps\api\src\controllers\collections\add-by-query.ts
+  Recebe `body.query` (um SearchQuery), monta o $match com buildMongoMatch(),
+  aplica o filtro de GPS e grava SOMENTE acq_id + secs. O body nao e logado nem
+  gravado. O stream NDJSON de resposta e efemero.
+
+Conclusao: a query existiu apenas na sessao do navegador que a disparou.
+
+
+--------------------------------------------------------------------------------
+2. O QUE E RECUPERAVEL COM CERTEZA
+--------------------------------------------------------------------------------
+2.1 O conjunto de frames
+    4.364 pares (acq_id, sec) em 171 aquisicoes.
+    Fonte: CollectionGroup no Mongo (secs[]) e
+           D:\carcara-data\all-perception-in-one\manifest.json (frames[]).
+    Conferido: framesCount = 4364 == soma de secs[] == len(manifest.frames).
+
+2.2 O espacamento: 30 m, greedy, por aquisicao, aplicado NA INSERCAO
+    Medida direta sobre os 4.364 frames (distancia Haversine entre frames
+    CONSECUTIVOS no tempo, dentro da mesma aquisicao; 4.193 pares):
+
+        minimo  ................ 25,89 m   (um unico par, ver 3.1)
+        minimo sem esse par .... 30,002 m
+        p01 .................... 30,14 m
+        p05 .................... 30,73 m
+        mediana ................ 41,95 m
+        pares >= 30 m .......... 4.192 de 4.193 = 99,976 %
+        pares em [30,0 ; 30,5) . 148
+
+    O piso rigido em 30,002 m e a concentracao logo acima de 30 nao acontecem
+    por acaso: e a assinatura do filtro greedy `gps_min_dist = 30`.
+    Fonte: paper/repro/pillar1-spacing-nearduplicate.json
+
+2.3 O campo `gps_spacing_m` da colecao esta NULL, e isso NAO contradiz 2.2
+    Ha DOIS caminhos de espacamento no sistema, e so um deles grava metadado:
+
+      (a) gps_min_dist dentro da query, em add-by-query.ts:36-92
+          DESTRUTIVO na insercao: o frame descartado nunca entra na colecao.
+          NAO grava gps_spacing_m.
+      (b) POST /collections/:id/spacing (spacing.ts)
+          NAO-DESTRUTIVO: mantem secs[] e marca activeSecs[].
+          GRAVA gps_spacing_m.
+
+    Estado medido no banco: gps_spacing_m = null e activeSecs = [] em todos os
+    171 grupos (0 frames ativos). Logo o caminho (b) nunca foi usado nesta
+    colecao, e o espacamento de 30 m veio do caminho (a).
+
+2.4 Algoritmo exato do espacamento (add-by-query.ts:63-92)
+    Por aquisicao, frames ordenados por `sec` crescente:
+      - frame SEM GPS  -> mantido incondicionalmente e NAO atualiza a referencia
+      - primeiro frame com GPS -> mantido, vira a referencia
+      - demais -> mantido se haversine(referencia, frame) >= 30, e entao vira a
+        nova referencia; caso contrario, descartado
+    Haversine com R = 6.371.000 m (add-by-query.ts:12).
+    Nao ha frame sem GPS nesta colecao (0 de 4.364), entao o ramo do meio nao
+    foi exercido.
+
+2.5 ORDEM em que as coisas aconteceram
+    1) busca ($match do buildMongoMatch) no Mongo
+    2) espacamento GPS de 30 m sobre o resultado, por aquisicao, em memoria
+    3) gravacao em CollectionGroup.secs[]
+    (1 e 2 sao a MESMA requisicao HTTP; nao ha etapa intermediaria em disco)
+    4) MUITO depois — 12/07/2026 — a curadoria escolheu 313 frames de teste
+       (POST /collections/:id/curation/generate). Essa e outra selecao, com
+       outro espacamento (1.593,79 m), e nao mexe nos 4.364.
+
+2.6 Blocos que o buildMongoMatch SABE filtrar (o universo do possivel)
+    C:\Users\REPRO_USER\Documents\carcara\apps\api\src\lib\build-mongo-match.ts
+    e packages\shared\src\types.ts (type SearchQuery)
+
+      b.vehicle     -> block.vehicle              $in
+      b.period      -> block.meteo.period         $in
+      b.condition   -> block.meteo.condition      $in
+      c.v           -> can.VehicleSpeed           $gte/$lte (um range)
+      c.swa         -> can.SteeringWheelAngle     $gte/$lte, varios ranges em $or
+      c.brakes      -> can.BrakeInfoStatus        $in
+      s.building    -> semseg.building            ranges em $or
+      s.vegetation  -> semseg.vegetation          ranges em $or
+      s.sidewalk    -> yes: sidewalk_left>2 OR sidewalk_right>2
+                       no : sidewalk_left<=2 AND sidewalk_right<=2
+      y.class       -> yolo $elemMatch class $in
+      y.rel         -> yolo $elemMatch rel_to_ego $in
+      y.conf        -> yolo $elemMatch conf ranges em $or
+      y.dist_m      -> yolo $elemMatch dist_m $gte/$lte
+      y.volume      -> low: size(yolo)<=3 · mid: 4..9 · high: >=10, em $or
+      gps_min_dist  -> NAO entra no $match; e o pos-filtro de 2.4
+
+    OPERADORES: todo bloco presente entra num $and de topo. O $or so aparece
+    DENTRO de um bloco (multiplos ranges de um mesmo campo, ou o par
+    sidewalk_left/right). Nao existe $or ENTRE blocos.
+
+    NAO EXISTE bloco `o.` (overpass / OpenStreetMap / road type) no
+    SearchQuery nem no buildMongoMatch. O `OverpassSub` mencionado no
+    CLAUDE.md nao esta exposto na busca desta versao do codigo.
+
+    FILTROS IMPLICITOS do $match: nenhum. Se a query vem vazia, add-by-query
+    devolve `{inserted:0}` sem inserir nada (add-by-query.ts:35-36); ou seja,
+    houve pelo menos um filtro. Ha um teto de 7.000 frames por colecao
+    (MAX_FRAMES, add-by-query.ts:9) — nao foi atingido.
+
+
+--------------------------------------------------------------------------------
+3. O QUE NAO E RECUPERAVEL — e o que foi feito para tentar
+--------------------------------------------------------------------------------
+3.1 A colecao NAO nasceu de uma unica operacao
+    Duas anomalias apontam para a mesma aquisicao:
+      - o unico par consecutivo abaixo de 30 m: 20240203175754 sec 243 -> 244,
+        a 25,89 m;
+      - os unicos 3 frames sem NENHUMA deteccao yolo (os outros 4.361 tem pelo
+        menos uma): 20240203175754 secs 243, 244 e 247.
+    E sao os mesmos 3 frames — a aquisicao 20240203175754 contribui exatamente
+    3 frames para a colecao, e a colecao tem exatamente 3 frames do dia
+    20240203.
+    Leitura: esses 3 frames entraram por uma operacao SEPARADA que nao passou
+    pelo crivo de 30 m contra o que ja estava la e nao exigia deteccao — muito
+    provavelmente POST /collections/:id/items/add (insercao manual de segundos
+    escolhidos), nao add-by-query.
+    NAO E POSSIVEL confirmar qual endpoint, nem quantas operacoes ao todo: nao
+    ha log, nem timestamp por grupo, nem por segundo. O que esta provado e que
+    houve MAIS DE UMA operacao.
+
+3.2 Os filtros de conteudo: testados e NAO reproduzidos
+    Foram testadas 9 hipoteses de filtro unico, cada uma aplicando o greedy de
+    30 m sobre o pool correspondente do acervo inteiro (81.392 frames) e
+    comparando com os 4.364. Nenhuma reproduz.
+
+      hipotese                                   pool   apos 30m   dentro   alvo
+      ------------------------------------------------------------------------
+      sem filtro (acervo inteiro)               81392     34652     2189    4364
+      >= 1 deteccao qualquer                    31939     11217     2272    4364
+      >= 1 deteccao E jpg                       31939     11217     2272    4364
+      y.class = 6 classes do gabarito           27195      8758     2376    4364
+      y.class = car                             23064      6814     1995    4364
+      y.class = truck                            5604      2855      787    4364
+      y.class = truck,bus,moto,person,bicycle   10466      4039     1051    4364
+      y.volume = mid+high (nd>=4)                8513      1606      720    4364
+      y.volume = low e nd>=1                    23426     10418     1582    4364
+
+    ("dentro" = quantos dos frames produzidos caem na colecao real.)
+
+    O que esses testes DESCARTAM: a colecao nao e "acervo + espacamento", nem
+    "tem deteccao + espacamento", nem nenhum filtro de classe ou de volume
+    sozinho. Houve pelo menos um filtro adicional, ou uma combinacao, que nao
+    e recuperavel.
+
+    Um indicio forte, mas nao conclusivo: no acervo inteiro so 175 aquisicoes
+    tem ao menos um frame com deteccao yolo, e a colecao tem 171 aquisicoes.
+    E compativel com um filtro y.*, mas 171 nao e 175 e a contagem de frames
+    nao fecha.
+
+3.3 Caracterizacao do resultado (descricao, NAO reconstrucao)
+    Medido sobre os 4.364 frames do manifest. Serve para dizer o que a colecao
+    E, nunca para afirmar o que foi pedido.
+
+      veiculo ......... Captur em 4.364/4.364 — mas Captur e o UNICO veiculo do
+                        acervo (81.392/81.392), entao isso nao discrimina nada
+      periodo ......... day 3.052 · night 725 · dusk 587 (os tres presentes)
+      condicao ........ 6 valores, de "Clear sky" a "Drizzle: moderate"
+      velocidade ...... 0,00 a 143,30 (faixa cheia)
+      volante ......... -563,70 a 563,84 (faixa cheia)
+      semseg building . 0,00 a 97,65 ·  vegetation 0,00 a 97,96
+      calcada >2% ..... 1.614 de 4.364
+      deteccoes ....... 4.361 frames com >=1; 3 com zero (ver 3.1)
+      classes vistas .. car 8.752 · truck 1.290 · person 449 · bus 410 ·
+                        train 189 · motorcycle 177 · traffic light 58 ·
+                        stop sign 16 · bicycle 13 · airplane 8 · e 8 outras
+      volume .......... low 3.290 · mid 1.055 · high 19
+      dias ............ 9 (20240103, 20240104, 20240129, 20240201, 20240202,
+                        20240203, 20250103, 20250117, 20250121)
+
+    A presenca de `traffic light`, `stop sign`, `potted plant`, `fork`, `kite`
+    entre as classes propostas mostra que NAO houve restricao y.class as
+    classes de veiculo. As faixas cheias de velocidade, volante, building e
+    vegetation nao deixam espaco para um filtro c.* ou s.* apertado.
+
+
+--------------------------------------------------------------------------------
+4. FRASE HONESTA PARA O METODO
+--------------------------------------------------------------------------------
+"A colecao foi montada pela busca indexada da plataforma seguida de um filtro
+ de espacamento GPS de 30 m aplicado por gravacao, e resultou em 4.364 frames
+ de 171 gravacoes. A plataforma nao persiste a expressao de busca; o conjunto
+ de frames resultante e o artefato de referencia e esta publicado no manifest."
+
+O que NAO pode ser afirmado sem inventar: quais filtros de conteudo foram
+usados, em que ordem os blocos foram combinados, e quantas buscas houve.
+
+
+--------------------------------------------------------------------------------
+5. FONTES
+--------------------------------------------------------------------------------
+codigo   apps/api/prisma/schema.prisma:188-227
+         apps/api/src/controllers/collections/add-by-query.ts
+         apps/api/src/controllers/collections/spacing.ts
+         apps/api/src/lib/build-mongo-match.ts
+         packages/shared/src/types.ts (SearchQuery)
+banco    collection <CARCARA_COLLECTION_ID> + 171 collection_groups
+         (lido por apps/api/scripts/repro-provenance.ts)
+         acervo lido por apps/api/scripts/repro-corpus-facts.ts
+                       e apps/api/scripts/repro-frame-classes.ts
+dados    D:\carcara-data\all-perception-in-one\manifest.json
+medidas  paper/repro/pillar1-spacing-nearduplicate.json
+         paper/repro/analyze_spacing_and_dup.py

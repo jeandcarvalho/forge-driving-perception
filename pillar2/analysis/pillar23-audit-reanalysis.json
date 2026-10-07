@@ -1,0 +1,582 @@
+{
+  "_meta": {
+    "manifest": "D:\\carcara-data\\all-perception-in-one\\manifest.json",
+    "v1_run": "D:\\carcara-data\\all-perception-in-one\\runs\\20260820T031131Z-vlm-audit",
+    "v2_run": "D:\\carcara-data\\all-perception-in-one\\runs\\20260821T002801Z-vlm-audit",
+    "phase2_run": "D:\\carcara-data\\all-perception-in-one\\runs\\20260820T173145Z-vlm-audit",
+    "parity_iou": 0.7,
+    "gt_excluded_classes": [
+      "airplane",
+      "train"
+    ]
+  },
+  "verdicts": {
+    "ruler_501": {
+      "counts": {
+        "class-changed": 55,
+        "kept": 245,
+        "corrected-redrawn": 93,
+        "rejected": 24,
+        "corrected-minor": 84
+      },
+      "total": 501,
+      "pct": {
+        "class-changed": 11.0,
+        "kept": 48.9,
+        "corrected-redrawn": 18.6,
+        "rejected": 4.8,
+        "corrected-minor": 16.8
+      }
+    },
+    "ruler_505_before_class_exclusion": {
+      "counts": {
+        "class-changed": 55,
+        "kept": 249,
+        "corrected-redrawn": 93,
+        "rejected": 24,
+        "corrected-minor": 84
+      },
+      "total": 505
+    },
+    "other_states_in_data": {
+      "unreviewed_detections_in_reviewed_frames": 0,
+      "corrected_without_correction_payload": 0,
+      "note": "verdict bruto no banco tem 4 estados: kept|corrected|rejected|unreviewed. As 5 categorias saem de `corrected` decomposto por classe e por IoU(orig,correcao) >= 0.7."
+    },
+    "human_added_never_proposed": {
+      "total": 254,
+      "by_class": {
+        "car": 133,
+        "truck": 93,
+        "bus": 11,
+        "motorcycle": 8,
+        "person": 6,
+        "bicycle": 3
+      }
+    }
+  },
+  "decomposition_254_402": {
+    "detections_proposals": 501,
+    "ground_truth": 731,
+    "tp_base": 329,
+    "fp_base": 172,
+    "fn_base": 402,
+    "identity_gt_minus_tp": {
+      "gt_minus_tp": 402,
+      "fn": 402,
+      "equal": true
+    },
+    "added_254": {
+      "value": 254,
+      "meaning": "objetos do gabarito que o detector NUNCA propos - desenhados a mao (origin == 'added')"
+    },
+    "had_proposal_but_failed_148": {
+      "value": 148,
+      "corrected_redrawn": 93,
+      "class_changed": 55,
+      "meaning": "objetos do gabarito que TINHAM proposta do detector mas a proposta nao foi aceita como correta: geometria refeita (mesma classe, IoU(orig,corr) < 0.7) ou classe trocada pelo humano"
+    },
+    "sum_check": {
+      "added_plus_failed": 402,
+      "fn": 402,
+      "equal": true
+    },
+    "parity_report_full": {
+      "total_frames": 4364,
+      "reviewed_frames": 313,
+      "iou_threshold": 0.7,
+      "detections": 505,
+      "ground_truth": 735,
+      "tp": 333,
+      "fp": 172,
+      "fn": 402,
+      "precision": 65.9,
+      "recall": 45.3,
+      "f1": 53.7,
+      "fp_localization": 93,
+      "fp_classification": 55,
+      "fp_background": 24,
+      "fn_undetected": 254,
+      "fn_from_errors": 148,
+      "kept": 249,
+      "corrected_box_minor": 84,
+      "corrected_box_major": 93,
+      "corrected_class": 55,
+      "rejected": 24,
+      "added": 254,
+      "model_boxes": 505,
+      "count_mismatches": []
+    },
+    "parity_diff_vs_published_735": {}
+  },
+  "recovery_denominators": {
+    "gt_total": 731,
+    "detector_proposals": 501,
+    "gt_not_proposed_by_detector": 254,
+    "gt_with_a_detector_proposal": 477,
+    "check": {
+      "recoverable_plus_added": 731,
+      "gt": 731,
+      "equal": true
+    },
+    "note": "as 24 `rejected` sao propostas sobre nada: entram em proposals, nao em GT."
+  },
+  "gt_by_class": {
+    "car": 427,
+    "truck": 255,
+    "bus": 23,
+    "motorcycle": 13,
+    "person": 10,
+    "train": 3,
+    "bicycle": 3,
+    "airplane": 1
+  },
+  "arms": {
+    "base_yolo": {
+      "definition_of_correct": "TP = veredito humano in {kept, corrected-minor}. Todas as 501 propostas ficam. Sem VLM.",
+      "boxes_retained": 501,
+      "tp": 329,
+      "fp": 172,
+      "gt": 731,
+      "fn": 402,
+      "precision": 65.7,
+      "recall_over_gt": 45.0,
+      "recall_over_recoverable": 69.0,
+      "recoverable_denominator": 477,
+      "per_proposed_class": {
+        "airplane": {
+          "proposals": 1,
+          "boxes_retained": 1,
+          "gt_total_for_class": 1,
+          "precision": 0.0,
+          "recovery_over_gt_class": 0.0
+        },
+        "bus": {
+          "proposals": 18,
+          "boxes_retained": 18,
+          "tp": 10,
+          "gt_total_for_class": 23,
+          "precision": 55.6,
+          "recovery_over_gt_class": 43.5
+        },
+        "car": {
+          "proposals": 304,
+          "boxes_retained": 304,
+          "tp": 208,
+          "gt_total_for_class": 427,
+          "precision": 68.4,
+          "recovery_over_gt_class": 48.7
+        },
+        "fire hydrant": {
+          "proposals": 1,
+          "boxes_retained": 1,
+          "gt_total_for_class": 0,
+          "precision": 0.0,
+          "recovery_over_gt_class": null
+        },
+        "fork": {
+          "proposals": 1,
+          "boxes_retained": 1,
+          "gt_total_for_class": 0,
+          "precision": 0.0,
+          "recovery_over_gt_class": null
+        },
+        "motorcycle": {
+          "proposals": 2,
+          "boxes_retained": 2,
+          "tp": 1,
+          "gt_total_for_class": 13,
+          "precision": 50.0,
+          "recovery_over_gt_class": 7.7
+        },
+        "person": {
+          "proposals": 9,
+          "boxes_retained": 9,
+          "tp": 3,
+          "gt_total_for_class": 10,
+          "precision": 33.3,
+          "recovery_over_gt_class": 30.0
+        },
+        "train": {
+          "proposals": 16,
+          "boxes_retained": 16,
+          "gt_total_for_class": 3,
+          "precision": 0.0,
+          "recovery_over_gt_class": 0.0
+        },
+        "truck": {
+          "proposals": 149,
+          "boxes_retained": 149,
+          "tp": 107,
+          "gt_total_for_class": 255,
+          "precision": 71.8,
+          "recovery_over_gt_class": 42.0
+        }
+      }
+    },
+    "vlm_single_v1": {
+      "definition_of_correct": "TP = caixa que SOBREVIVE a curadoria do VLM E cujo veredito HUMANO e kept|corrected-minor com rotulo preservado, OU cujo veredito humano e class-changed e o VLM emitiu exatamente a classe que o humano pos. Nao ha matching por IoU contra o GT: o vinculo e ref_det_id.",
+      "boxes_retained": 417,
+      "tp": 312,
+      "fp": 105,
+      "gt": 731,
+      "fn": 419,
+      "precision": 74.8,
+      "recall_over_gt": 42.7,
+      "recall_over_recoverable": 65.4,
+      "recoverable_denominator": 477,
+      "detail": {
+        "manteve_caixa_boa": 312,
+        "manteve_caixa_mal_posicionada": 69,
+        "manteve_fp_de_fundo": 3,
+        "removeu_caixa_boa": 17,
+        "removeu_fp_de_erro": 46,
+        "removeu_fp_de_fundo": 21,
+        "rotulo_continua_errado": 33
+      },
+      "semantics": {
+        "presence_confusion": {
+          "background__vlm_absent": 21,
+          "background__vlm_present": 3,
+          "real__vlm_absent": 63,
+          "real__vlm_present": 414
+        },
+        "class_corrections_attempted": 7,
+        "class_corrections_right": 0,
+        "class_corrections_wrong": 6,
+        "class_correction_success_rate": 0.0
+      },
+      "geometry": {
+        "human_verdict_x_vlm_verdict": {
+          "class-changed": {
+            "corrected-redrawn": 17,
+            "rejected": 22,
+            "kept": 10,
+            "class-changed": 6
+          },
+          "kept": {
+            "kept": 205,
+            "rejected": 15,
+            "corrected-redrawn": 24,
+            "class-changed": 1
+          },
+          "corrected-redrawn": {
+            "kept": 62,
+            "corrected-redrawn": 7,
+            "rejected": 24
+          },
+          "rejected": {
+            "corrected-redrawn": 2,
+            "rejected": 21,
+            "kept": 1
+          },
+          "corrected-minor": {
+            "kept": 79,
+            "corrected-redrawn": 3,
+            "rejected": 2
+          }
+        },
+        "binary_view": {
+          "kept": {
+            "n": 245,
+            "vlm_said_tight_kept": 205,
+            "vlm_said_needs_change_or_reject": 40,
+            "pct_said_tight": 83.7
+          },
+          "corrected-minor": {
+            "n": 84,
+            "vlm_said_tight_kept": 79,
+            "vlm_said_needs_change_or_reject": 5,
+            "pct_said_tight": 94.0
+          },
+          "corrected-redrawn": {
+            "n": 93,
+            "vlm_said_tight_kept": 62,
+            "vlm_said_needs_change_or_reject": 31,
+            "pct_said_tight": 66.7
+          }
+        }
+      },
+      "surviving_by_human_verdict": {
+        "class-changed": 33,
+        "kept": 230,
+        "corrected-redrawn": 69,
+        "rejected": 3,
+        "corrected-minor": 82
+      },
+      "per_proposed_class": {
+        "airplane": {
+          "proposals": 1,
+          "gt_total_for_class": 1,
+          "precision": null,
+          "recovery_over_gt_class": 0.0
+        },
+        "bus": {
+          "proposals": 18,
+          "boxes_retained": 15,
+          "tp": 9,
+          "gt_total_for_class": 23,
+          "precision": 60.0,
+          "recovery_over_gt_class": 39.1
+        },
+        "car": {
+          "proposals": 304,
+          "boxes_retained": 255,
+          "tp": 192,
+          "gt_total_for_class": 427,
+          "precision": 75.3,
+          "recovery_over_gt_class": 45.0
+        },
+        "fire hydrant": {
+          "proposals": 1,
+          "gt_total_for_class": 0,
+          "precision": null,
+          "recovery_over_gt_class": null
+        },
+        "fork": {
+          "proposals": 1,
+          "gt_total_for_class": 0,
+          "precision": null,
+          "recovery_over_gt_class": null
+        },
+        "motorcycle": {
+          "proposals": 2,
+          "boxes_retained": 1,
+          "tp": 1,
+          "gt_total_for_class": 13,
+          "precision": 100.0,
+          "recovery_over_gt_class": 7.7
+        },
+        "person": {
+          "proposals": 9,
+          "boxes_retained": 7,
+          "tp": 3,
+          "gt_total_for_class": 10,
+          "precision": 42.9,
+          "recovery_over_gt_class": 30.0
+        },
+        "train": {
+          "proposals": 16,
+          "gt_total_for_class": 3,
+          "precision": null,
+          "recovery_over_gt_class": 0.0
+        },
+        "truck": {
+          "proposals": 149,
+          "boxes_retained": 139,
+          "tp": 107,
+          "gt_total_for_class": 255,
+          "precision": 77.0,
+          "recovery_over_gt_class": 42.0
+        }
+      },
+      "rows_in_phase1_file": 505,
+      "rows_used_on_501_ruler": 501,
+      "rows_dropped_off_ruler": 4,
+      "run_dir": "D:\\carcara-data\\all-perception-in-one\\runs\\20260820T031131Z-vlm-audit"
+    },
+    "vlm_decomposed_v2": {
+      "definition_of_correct": "TP = caixa que SOBREVIVE a curadoria do VLM E cujo veredito HUMANO e kept|corrected-minor com rotulo preservado, OU cujo veredito humano e class-changed e o VLM emitiu exatamente a classe que o humano pos. Nao ha matching por IoU contra o GT: o vinculo e ref_det_id.",
+      "boxes_retained": 468,
+      "tp": 368,
+      "fp": 100,
+      "gt": 731,
+      "fn": 363,
+      "precision": 78.6,
+      "recall_over_gt": 50.3,
+      "recall_over_recoverable": 77.1,
+      "recoverable_denominator": 477,
+      "detail": {
+        "corrigiu_rotulo_certo": 43,
+        "estragou_caixa_boa": 4,
+        "manteve_caixa_boa": 325,
+        "manteve_caixa_mal_posicionada": 73,
+        "manteve_fp_de_fundo": 13,
+        "removeu_fp_de_erro": 22,
+        "removeu_fp_de_fundo": 11,
+        "rotulo_continua_errado": 10
+      },
+      "semantics": {
+        "presence_confusion": {
+          "background__vlm_absent": 11,
+          "background__vlm_present": 13,
+          "real__vlm_absent": 22,
+          "real__vlm_present": 455
+        },
+        "class_corrections_attempted": 54,
+        "class_corrections_right": 43,
+        "class_corrections_wrong": 4,
+        "class_correction_success_rate": 79.6
+      },
+      "geometry": {
+        "human_verdict_x_vlm_verdict": {
+          "class-changed": {
+            "class-changed": 43,
+            "kept": 4,
+            "corrected-minor": 6,
+            "rejected": 2
+          },
+          "kept": {
+            "corrected-minor": 146,
+            "kept": 95,
+            "class-changed": 4
+          },
+          "corrected-redrawn": {
+            "corrected-minor": 52,
+            "kept": 19,
+            "class-changed": 2,
+            "rejected": 20
+          },
+          "rejected": {
+            "class-changed": 5,
+            "rejected": 11,
+            "kept": 1,
+            "corrected-minor": 7
+          },
+          "corrected-minor": {
+            "corrected-minor": 48,
+            "kept": 36
+          }
+        },
+        "binary_view": {
+          "kept": {
+            "n": 245,
+            "vlm_said_tight_kept": 95,
+            "vlm_said_needs_change_or_reject": 150,
+            "pct_said_tight": 38.8
+          },
+          "corrected-minor": {
+            "n": 84,
+            "vlm_said_tight_kept": 36,
+            "vlm_said_needs_change_or_reject": 48,
+            "pct_said_tight": 42.9
+          },
+          "corrected-redrawn": {
+            "n": 93,
+            "vlm_said_tight_kept": 19,
+            "vlm_said_needs_change_or_reject": 74,
+            "pct_said_tight": 20.4
+          }
+        }
+      },
+      "surviving_by_human_verdict": {
+        "class-changed": 53,
+        "kept": 245,
+        "corrected-redrawn": 73,
+        "rejected": 13,
+        "corrected-minor": 84
+      },
+      "per_proposed_class": {
+        "airplane": {
+          "proposals": 1,
+          "boxes_retained": 1,
+          "gt_total_for_class": 1,
+          "precision": 0.0,
+          "recovery_over_gt_class": 0.0
+        },
+        "bus": {
+          "proposals": 18,
+          "boxes_retained": 18,
+          "tp": 15,
+          "gt_total_for_class": 23,
+          "precision": 83.3,
+          "recovery_over_gt_class": 65.2
+        },
+        "car": {
+          "proposals": 304,
+          "boxes_retained": 283,
+          "tp": 217,
+          "gt_total_for_class": 427,
+          "precision": 76.7,
+          "recovery_over_gt_class": 50.8
+        },
+        "fire hydrant": {
+          "proposals": 1,
+          "boxes_retained": 1,
+          "tp": 1,
+          "gt_total_for_class": 0,
+          "precision": 100.0,
+          "recovery_over_gt_class": null
+        },
+        "fork": {
+          "proposals": 1,
+          "gt_total_for_class": 0,
+          "precision": null,
+          "recovery_over_gt_class": null
+        },
+        "motorcycle": {
+          "proposals": 2,
+          "boxes_retained": 2,
+          "tp": 1,
+          "gt_total_for_class": 13,
+          "precision": 50.0,
+          "recovery_over_gt_class": 7.7
+        },
+        "person": {
+          "proposals": 9,
+          "boxes_retained": 8,
+          "tp": 4,
+          "gt_total_for_class": 10,
+          "precision": 50.0,
+          "recovery_over_gt_class": 40.0
+        },
+        "train": {
+          "proposals": 16,
+          "boxes_retained": 13,
+          "tp": 12,
+          "gt_total_for_class": 3,
+          "precision": 92.3,
+          "recovery_over_gt_class": 400.0
+        },
+        "truck": {
+          "proposals": 149,
+          "boxes_retained": 142,
+          "tp": 118,
+          "gt_total_for_class": 255,
+          "precision": 83.1,
+          "recovery_over_gt_class": 46.3
+        }
+      },
+      "rows_in_phase1_file": 501,
+      "rows_used_on_501_ruler": 501,
+      "rows_dropped_off_ruler": 0,
+      "run_dir": "D:\\carcara-data\\all-perception-in-one\\runs\\20260821T002801Z-vlm-audit"
+    }
+  },
+  "one_in_eleven": {
+    "source_run": "D:\\carcara-data\\all-perception-in-one\\runs\\20260820T173145Z-vlm-audit",
+    "proposals_total": 1528,
+    "matched_by_presence": 172,
+    "matched_presence_and_class": 137,
+    "human_added_targets": 254,
+    "ratio_proposals_per_presence_hit": 8.88,
+    "ratio_proposals_per_class_correct": 11.15,
+    "presence_rule": "IoU >= 0.3 (VLM_RECALL_PRESENCE_IOU) OR centro dentro da caixa humana",
+    "by_class": {
+      "car": {
+        "human": 133,
+        "found": 92
+      },
+      "bus": {
+        "human": 11,
+        "found": 7
+      },
+      "truck": {
+        "human": 93,
+        "found": 62
+      },
+      "motorcycle": {
+        "human": 8,
+        "found": 4
+      },
+      "person": {
+        "human": 6,
+        "found": 4
+      },
+      "bicycle": {
+        "human": 3,
+        "found": 3
+      }
+    }
+  }
+}

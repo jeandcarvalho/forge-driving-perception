@@ -1,0 +1,992 @@
+{
+  "_meta": {
+    "manifest": "D:\\carcara-data\\all-perception-in-one\\manifest.json",
+    "arms": {
+      "vlm_single_v1": "D:\\carcara-data\\all-perception-in-one\\runs\\20260820T031131Z-vlm-audit",
+      "vlm_decomposed_v2": "D:\\carcara-data\\all-perception-in-one\\runs\\20260821T002801Z-vlm-audit",
+      "vlm_single_classfix_v3": "D:\\carcara-data\\all-perception-in-one\\runs\\20260907T164834Z-vlm-audit-v3-single-classfix"
+    },
+    "flow_cache": "D:\\carcara-data\\all-perception-in-one\\runs\\_flow_cache",
+    "parity_iou": 0.7,
+    "gt_excluded": [
+      "airplane",
+      "train"
+    ],
+    "semantics_vs_geometry": {
+      "semantica": "presenca (object_present / rejected) e classe",
+      "geometria": "qualidade da caixa: kept x corrected-minor x corrected-redrawn",
+      "aviso": "nenhum braco de Fase 1 devolve COORDENADA. Geometria so entra no placar via o veredito humano: corrected-redrawn nunca vira TP. O julgamento geometrico do VLM nao move a Table 6 por si."
+    }
+  },
+  "arms": {
+    "vlm_single_v1": {
+      "semantics": {
+        "presence": {
+          "counts": {
+            "background__vlm_absent": 21,
+            "background__vlm_present": 3,
+            "real__vlm_absent": 63,
+            "real__vlm_present": 414
+          },
+          "background_correctly_rejected": 21,
+          "background_wrongly_kept": 3,
+          "real_object_wrongly_rejected": 63,
+          "real_object_correctly_kept": 414,
+          "rejection_precision_of_the_vlm": 25.0,
+          "rejection_recall_over_24_background": 87.5,
+          "good_boxes_destroyed_kept_or_minor": 17
+        },
+        "class_correction": {
+          "human_class_errors_in_501": 55,
+          "attempts": 7,
+          "attempts_by_human_verdict": {
+            "class-changed": 6,
+            "kept": 1
+          },
+          "right": 0,
+          "wrong_class_on_a_real_class_error": 0,
+          "no_class_emitted_schema_bug": 6,
+          "attempted_where_human_did_not_relabel": 1,
+          "human_class_errors_missed": 49,
+          "precision_of_attempts": 0.0,
+          "recall_over_human_class_errors": 0.0,
+          "note": "o numero publicado '43 de 55' e RECALL sobre os 55 erros de classe do humano, nao acuracia das tentativas do VLM."
+        }
+      },
+      "geometry": {
+        "human_x_vlm_full_matrix": {
+          "class-changed": {
+            "corrected-redrawn": 17,
+            "rejected": 22,
+            "kept": 10,
+            "class-changed": 6
+          },
+          "kept": {
+            "kept": 205,
+            "rejected": 15,
+            "corrected-redrawn": 24,
+            "class-changed": 1
+          },
+          "corrected-redrawn": {
+            "kept": 62,
+            "corrected-redrawn": 7,
+            "rejected": 24
+          },
+          "rejected": {
+            "corrected-redrawn": 2,
+            "rejected": 21,
+            "kept": 1
+          },
+          "corrected-minor": {
+            "kept": 79,
+            "corrected-redrawn": 3,
+            "rejected": 2
+          }
+        },
+        "by_human_geometry_verdict": {
+          "kept": {
+            "n": 245,
+            "vlm_says_box_is_fine": 206,
+            "vlm_says_box_needs_work": 24,
+            "vlm_rejects_outright": 15,
+            "pct_says_fine": 84.1
+          },
+          "corrected-minor": {
+            "n": 84,
+            "vlm_says_box_is_fine": 79,
+            "vlm_says_box_needs_work": 3,
+            "vlm_rejects_outright": 2,
+            "pct_says_fine": 94.0
+          },
+          "corrected-redrawn": {
+            "n": 93,
+            "vlm_says_box_is_fine": 62,
+            "vlm_says_box_needs_work": 7,
+            "vlm_rejects_outright": 24,
+            "pct_says_fine": 66.7
+          }
+        },
+        "headline": {
+          "bad_boxes_accepted_as_fine": 62,
+          "bad_boxes_total": 93,
+          "pct_bad_accepted": 66.7,
+          "good_boxes_flagged_or_rejected": 44,
+          "good_boxes_total": 329,
+          "pct_good_flagged": 13.4,
+          "separation_pp": 20.0,
+          "reading": "separation_pp e a diferenca entre P(VLM diz 'caixa ok' | humano aceitou a caixa) e P(mesmo | humano refez a caixa). Zero = o julgamento geometrico do VLM nao carrega informacao."
+        },
+        "minor_vs_redraw_performance": {
+          "on_corrected_minor": {
+            "kept": 79,
+            "corrected-redrawn": 3,
+            "rejected": 2
+          },
+          "on_corrected_redrawn": {
+            "kept": 62,
+            "corrected-redrawn": 7,
+            "rejected": 24
+          },
+          "caveat": "o VLM nunca ve a distincao minor x redrawn: ela e derivada no codigo por IoU(original, correcao) >= 0.7, depois do fato."
+        }
+      },
+      "run_dir": "D:\\carcara-data\\all-perception-in-one\\runs\\20260820T031131Z-vlm-audit"
+    },
+    "vlm_decomposed_v2": {
+      "semantics": {
+        "presence": {
+          "counts": {
+            "background__vlm_absent": 11,
+            "background__vlm_present": 13,
+            "real__vlm_absent": 22,
+            "real__vlm_present": 455
+          },
+          "background_correctly_rejected": 11,
+          "background_wrongly_kept": 13,
+          "real_object_wrongly_rejected": 22,
+          "real_object_correctly_kept": 455,
+          "rejection_precision_of_the_vlm": 33.3,
+          "rejection_recall_over_24_background": 45.8,
+          "good_boxes_destroyed_kept_or_minor": 0
+        },
+        "class_correction": {
+          "human_class_errors_in_501": 55,
+          "attempts": 54,
+          "attempts_by_human_verdict": {
+            "class-changed": 43,
+            "rejected": 5,
+            "corrected-redrawn": 2,
+            "kept": 4
+          },
+          "right": 43,
+          "wrong_class_on_a_real_class_error": 0,
+          "no_class_emitted_schema_bug": 0,
+          "attempted_where_human_did_not_relabel": 11,
+          "human_class_errors_missed": 12,
+          "precision_of_attempts": 79.6,
+          "recall_over_human_class_errors": 78.2,
+          "note": "o numero publicado '43 de 55' e RECALL sobre os 55 erros de classe do humano, nao acuracia das tentativas do VLM."
+        }
+      },
+      "geometry": {
+        "human_x_vlm_full_matrix": {
+          "class-changed": {
+            "class-changed": 43,
+            "kept": 4,
+            "corrected-minor": 6,
+            "rejected": 2
+          },
+          "kept": {
+            "corrected-minor": 146,
+            "kept": 95,
+            "class-changed": 4
+          },
+          "corrected-redrawn": {
+            "corrected-minor": 52,
+            "kept": 19,
+            "class-changed": 2,
+            "rejected": 20
+          },
+          "rejected": {
+            "class-changed": 5,
+            "rejected": 11,
+            "kept": 1,
+            "corrected-minor": 7
+          },
+          "corrected-minor": {
+            "corrected-minor": 48,
+            "kept": 36
+          }
+        },
+        "by_human_geometry_verdict": {
+          "kept": {
+            "n": 245,
+            "vlm_says_box_is_fine": 99,
+            "vlm_says_box_needs_work": 146,
+            "vlm_rejects_outright": 0,
+            "pct_says_fine": 40.4
+          },
+          "corrected-minor": {
+            "n": 84,
+            "vlm_says_box_is_fine": 36,
+            "vlm_says_box_needs_work": 48,
+            "vlm_rejects_outright": 0,
+            "pct_says_fine": 42.9
+          },
+          "corrected-redrawn": {
+            "n": 93,
+            "vlm_says_box_is_fine": 21,
+            "vlm_says_box_needs_work": 52,
+            "vlm_rejects_outright": 20,
+            "pct_says_fine": 22.6
+          }
+        },
+        "headline": {
+          "bad_boxes_accepted_as_fine": 21,
+          "bad_boxes_total": 93,
+          "pct_bad_accepted": 22.6,
+          "good_boxes_flagged_or_rejected": 194,
+          "good_boxes_total": 329,
+          "pct_good_flagged": 59.0,
+          "separation_pp": 18.5,
+          "reading": "separation_pp e a diferenca entre P(VLM diz 'caixa ok' | humano aceitou a caixa) e P(mesmo | humano refez a caixa). Zero = o julgamento geometrico do VLM nao carrega informacao."
+        },
+        "minor_vs_redraw_performance": {
+          "on_corrected_minor": {
+            "corrected-minor": 48,
+            "kept": 36
+          },
+          "on_corrected_redrawn": {
+            "corrected-minor": 52,
+            "kept": 19,
+            "class-changed": 2,
+            "rejected": 20
+          },
+          "caveat": "o VLM nunca ve a distincao minor x redrawn: ela e derivada no codigo por IoU(original, correcao) >= 0.7, depois do fato."
+        }
+      },
+      "run_dir": "D:\\carcara-data\\all-perception-in-one\\runs\\20260821T002801Z-vlm-audit"
+    },
+    "vlm_single_classfix_v3": {
+      "semantics": {
+        "presence": {
+          "counts": {
+            "background__vlm_absent": 21,
+            "background__vlm_present": 3,
+            "real__vlm_absent": 62,
+            "real__vlm_present": 415
+          },
+          "background_correctly_rejected": 21,
+          "background_wrongly_kept": 3,
+          "real_object_wrongly_rejected": 62,
+          "real_object_correctly_kept": 415,
+          "rejection_precision_of_the_vlm": 25.3,
+          "rejection_recall_over_24_background": 87.5,
+          "good_boxes_destroyed_kept_or_minor": 18
+        },
+        "class_correction": {
+          "human_class_errors_in_501": 55,
+          "attempts": 8,
+          "attempts_by_human_verdict": {
+            "class-changed": 7,
+            "kept": 1
+          },
+          "right": 7,
+          "wrong_class_on_a_real_class_error": 0,
+          "no_class_emitted_schema_bug": 0,
+          "attempted_where_human_did_not_relabel": 1,
+          "human_class_errors_missed": 48,
+          "precision_of_attempts": 87.5,
+          "recall_over_human_class_errors": 12.7,
+          "note": "o numero publicado '43 de 55' e RECALL sobre os 55 erros de classe do humano, nao acuracia das tentativas do VLM."
+        }
+      },
+      "geometry": {
+        "human_x_vlm_full_matrix": {
+          "class-changed": {
+            "corrected-redrawn": 18,
+            "rejected": 20,
+            "kept": 10,
+            "class-changed": 7
+          },
+          "kept": {
+            "kept": 206,
+            "rejected": 16,
+            "corrected-redrawn": 22,
+            "class-changed": 1
+          },
+          "corrected-redrawn": {
+            "kept": 62,
+            "corrected-redrawn": 7,
+            "rejected": 24
+          },
+          "rejected": {
+            "corrected-redrawn": 2,
+            "rejected": 21,
+            "kept": 1
+          },
+          "corrected-minor": {
+            "kept": 78,
+            "corrected-redrawn": 4,
+            "rejected": 2
+          }
+        },
+        "by_human_geometry_verdict": {
+          "kept": {
+            "n": 245,
+            "vlm_says_box_is_fine": 207,
+            "vlm_says_box_needs_work": 22,
+            "vlm_rejects_outright": 16,
+            "pct_says_fine": 84.5
+          },
+          "corrected-minor": {
+            "n": 84,
+            "vlm_says_box_is_fine": 78,
+            "vlm_says_box_needs_work": 4,
+            "vlm_rejects_outright": 2,
+            "pct_says_fine": 92.9
+          },
+          "corrected-redrawn": {
+            "n": 93,
+            "vlm_says_box_is_fine": 62,
+            "vlm_says_box_needs_work": 7,
+            "vlm_rejects_outright": 24,
+            "pct_says_fine": 66.7
+          }
+        },
+        "headline": {
+          "bad_boxes_accepted_as_fine": 62,
+          "bad_boxes_total": 93,
+          "pct_bad_accepted": 66.7,
+          "good_boxes_flagged_or_rejected": 44,
+          "good_boxes_total": 329,
+          "pct_good_flagged": 13.4,
+          "separation_pp": 20.0,
+          "reading": "separation_pp e a diferenca entre P(VLM diz 'caixa ok' | humano aceitou a caixa) e P(mesmo | humano refez a caixa). Zero = o julgamento geometrico do VLM nao carrega informacao."
+        },
+        "minor_vs_redraw_performance": {
+          "on_corrected_minor": {
+            "kept": 78,
+            "corrected-redrawn": 4,
+            "rejected": 2
+          },
+          "on_corrected_redrawn": {
+            "kept": 62,
+            "corrected-redrawn": 7,
+            "rejected": 24
+          },
+          "caveat": "o VLM nunca ve a distincao minor x redrawn: ela e derivada no codigo por IoU(original, correcao) >= 0.7, depois do fato."
+        }
+      },
+      "run_dir": "D:\\carcara-data\\all-perception-in-one\\runs\\20260907T164834Z-vlm-audit-v3-single-classfix"
+    }
+  },
+  "verdict_agreement_between_arms": {
+    "vlm_single_v1 x vlm_decomposed_v2": {
+      "n_common": 501,
+      "identical_verdicts": 191,
+      "pct_identical": 38.1,
+      "matrix": {
+        "kept": {
+          "corrected-minor": 197,
+          "kept": 151,
+          "class-changed": 9
+        },
+        "rejected": {
+          "rejected": 33,
+          "class-changed": 26,
+          "corrected-minor": 24,
+          "kept": 1
+        },
+        "class-changed": {
+          "class-changed": 7
+        },
+        "corrected-redrawn": {
+          "corrected-minor": 38,
+          "class-changed": 12,
+          "kept": 3
+        }
+      }
+    },
+    "vlm_single_v1 x vlm_single_classfix_v3": {
+      "n_common": 501,
+      "identical_verdicts": 494,
+      "pct_identical": 98.6,
+      "matrix": {
+        "kept": {
+          "kept": 355,
+          "corrected-redrawn": 2
+        },
+        "rejected": {
+          "rejected": 82,
+          "corrected-redrawn": 1,
+          "class-changed": 1
+        },
+        "class-changed": {
+          "class-changed": 7
+        },
+        "corrected-redrawn": {
+          "corrected-redrawn": 50,
+          "kept": 2,
+          "rejected": 1
+        }
+      }
+    },
+    "vlm_decomposed_v2 x vlm_single_classfix_v3": {
+      "n_common": 501,
+      "identical_verdicts": 192,
+      "pct_identical": 38.3,
+      "matrix": {
+        "corrected-minor": {
+          "kept": 198,
+          "rejected": 25,
+          "corrected-redrawn": 36
+        },
+        "rejected": {
+          "rejected": 33
+        },
+        "kept": {
+          "kept": 151,
+          "corrected-redrawn": 3,
+          "rejected": 1
+        },
+        "class-changed": {
+          "rejected": 24,
+          "class-changed": 8,
+          "corrected-redrawn": 14,
+          "kept": 8
+        }
+      }
+    }
+  },
+  "coordinate_adjustment": {
+    "source_arm": "vlm_single_v1 (o unico braco em que este experimento foi rodado)",
+    "scoring_rule": "box_is_correct: rotulo igual ao do gabarito E IoU(caixa, caixa do gabarito) >= 0.7. Regra GEOMETRICA, diferente da contagem por veredito da Table 6 — mas reproduz 329/172 no base.",
+    "replacement_source": "YOLO11x fresco @conf 0.25 (runs/_flow_cache/detections.json)",
+    "corrections_requested_by_vlm": 53,
+    "geometry_replaced": 52,
+    "no_overlapping_candidate": 1,
+    "tp_before": 312,
+    "tp_after": 304,
+    "net_delta_tp": -8,
+    "boxes_improved_iou": 11,
+    "boxes_worsened_iou": 39,
+    "boxes_unchanged_iou": 2,
+    "good_box_broken_tp_to_fp": 9,
+    "bad_box_fixed_fp_to_tp": 1,
+    "stayed_tp": 18,
+    "stayed_fp": 24,
+    "net_from_transitions": -8,
+    "iou_delta_mean": -0.0974,
+    "iou_delta_median": -0.1217,
+    "iou_before_mean": 0.7963,
+    "iou_after_mean": 0.6989,
+    "per_box": [
+      {
+        "key": "20240103201734:4:0",
+        "human_verdict": "class-changed",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.7561,
+        "delta": -0.2439,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240104101922:0:4",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.7646,
+        "delta": -0.2354,
+        "was_tp": true,
+        "is_tp_after": true
+      },
+      {
+        "key": "20240104101922:0:6",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.846,
+        "delta": -0.154,
+        "was_tp": true,
+        "is_tp_after": true
+      },
+      {
+        "key": "20240104102421:248:3",
+        "human_verdict": "class-changed",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.8269,
+        "delta": -0.1731,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240104145941:276:0",
+        "human_verdict": "rejected",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.0,
+        "iou_after": 0.0,
+        "delta": 0.0,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240104162940:230:0",
+        "human_verdict": "corrected-redrawn",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.1354,
+        "iou_after": 0.6696,
+        "delta": 0.5342,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129134506:8:2",
+        "human_verdict": "corrected-minor",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.7154,
+        "iou_after": 0.8133,
+        "delta": 0.0979,
+        "was_tp": true,
+        "is_tp_after": true
+      },
+      {
+        "key": "20240129140015:218:0",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.9102,
+        "delta": -0.0898,
+        "was_tp": true,
+        "is_tp_after": true
+      },
+      {
+        "key": "20240129140515:173:0",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.8133,
+        "delta": -0.1867,
+        "was_tp": true,
+        "is_tp_after": true
+      },
+      {
+        "key": "20240129143012:237:2",
+        "human_verdict": "corrected-redrawn",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.19,
+        "iou_after": 0.5879,
+        "delta": 0.3979,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129143513:90:1",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.8155,
+        "delta": -0.1845,
+        "was_tp": true,
+        "is_tp_after": true
+      },
+      {
+        "key": "20240129143513:230:0",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.5674,
+        "delta": -0.4326,
+        "was_tp": true,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129145511:237:1",
+        "human_verdict": "class-changed",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.4811,
+        "delta": -0.5189,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129150012:233:1",
+        "human_verdict": "class-changed",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.8783,
+        "delta": -0.1217,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129160447:282:0",
+        "human_verdict": "class-changed",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.3257,
+        "iou_after": 0.5695,
+        "delta": 0.2437,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129161450:70:1",
+        "human_verdict": "class-changed",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.8791,
+        "delta": -0.1209,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129161450:274:0",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.7404,
+        "delta": -0.2596,
+        "was_tp": true,
+        "is_tp_after": true
+      },
+      {
+        "key": "20240129163948:251:1",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.6692,
+        "delta": -0.3308,
+        "was_tp": true,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129164449:90:0",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.6442,
+        "delta": -0.3558,
+        "was_tp": true,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129164950:216:1",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.6953,
+        "delta": -0.3047,
+        "was_tp": true,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129165453:96:0",
+        "human_verdict": "class-changed",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.667,
+        "delta": -0.333,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129170452:233:1",
+        "human_verdict": "corrected-minor",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.7939,
+        "iou_after": 0.7639,
+        "delta": -0.03,
+        "was_tp": true,
+        "is_tp_after": true
+      },
+      {
+        "key": "20240129170954:27:3",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.5119,
+        "delta": -0.4881,
+        "was_tp": true,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129174947:183:0",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.6811,
+        "delta": -0.3189,
+        "was_tp": true,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129174947:231:0",
+        "human_verdict": "corrected-redrawn",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.1278,
+        "iou_after": 0.6891,
+        "delta": 0.5613,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129193123:16:0",
+        "human_verdict": "corrected-redrawn",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.3996,
+        "iou_after": 0.6891,
+        "delta": 0.2894,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129202123:265:0",
+        "human_verdict": "corrected-minor",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.9493,
+        "iou_after": 0.8686,
+        "delta": -0.0807,
+        "was_tp": true,
+        "is_tp_after": true
+      },
+      {
+        "key": "20240129205123:102:0",
+        "human_verdict": "class-changed",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.5844,
+        "delta": -0.4156,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129205623:57:0",
+        "human_verdict": "class-changed",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.5391,
+        "iou_after": 0.7792,
+        "delta": 0.2401,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129210123:281:0",
+        "human_verdict": "class-changed",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.625,
+        "iou_after": 0.5746,
+        "delta": -0.0504,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129210623:155:1",
+        "human_verdict": "class-changed",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.3584,
+        "iou_after": 0.2962,
+        "delta": -0.0621,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129211623:126:1",
+        "human_verdict": "class-changed",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.2551,
+        "iou_after": 0.8593,
+        "delta": 0.6042,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129214623:262:0",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.9302,
+        "delta": -0.0698,
+        "was_tp": true,
+        "is_tp_after": true
+      },
+      {
+        "key": "20240129215123:231:1",
+        "human_verdict": "class-changed",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.6788,
+        "iou_after": 0.7234,
+        "delta": 0.0446,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129215623:89:0",
+        "human_verdict": "class-changed",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.7161,
+        "iou_after": 0.7406,
+        "delta": 0.0244,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129222122:292:0",
+        "human_verdict": "class-changed",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.9633,
+        "iou_after": 0.8906,
+        "delta": -0.0727,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129223122:219:0",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.9043,
+        "delta": -0.0957,
+        "was_tp": true,
+        "is_tp_after": true
+      },
+      {
+        "key": "20240129223622:116:0",
+        "human_verdict": "class-changed",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.7523,
+        "delta": -0.2477,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240129225122:295:0",
+        "human_verdict": "class-changed",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.8487,
+        "delta": -0.1513,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240201163320:234:2",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.7344,
+        "delta": -0.2656,
+        "was_tp": true,
+        "is_tp_after": true
+      },
+      {
+        "key": "20240201163821:188:5",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.6586,
+        "delta": -0.3414,
+        "was_tp": true,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240201164321:108:0",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.8973,
+        "delta": -0.1027,
+        "was_tp": true,
+        "is_tp_after": true
+      },
+      {
+        "key": "20240201164822:89:5",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.6445,
+        "delta": -0.3555,
+        "was_tp": true,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240201165826:73:4",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.84,
+        "delta": -0.16,
+        "was_tp": true,
+        "is_tp_after": true
+      },
+      {
+        "key": "20240201172329:156:0",
+        "human_verdict": "corrected-redrawn",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.2739,
+        "iou_after": 0.7148,
+        "delta": 0.4409,
+        "was_tp": false,
+        "is_tp_after": true
+      },
+      {
+        "key": "20240201190654:205:1",
+        "human_verdict": "rejected",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.0,
+        "iou_after": 0.0,
+        "delta": 0.0,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240201190654:205:2",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.7668,
+        "delta": -0.2332,
+        "was_tp": true,
+        "is_tp_after": true
+      },
+      {
+        "key": "20240201191654:269:1",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.7888,
+        "delta": -0.2112,
+        "was_tp": true,
+        "is_tp_after": true
+      },
+      {
+        "key": "20240202174330:68:3",
+        "human_verdict": "corrected-redrawn",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 0.3584,
+        "iou_after": 0.1146,
+        "delta": -0.2438,
+        "was_tp": false,
+        "is_tp_after": false
+      },
+      {
+        "key": "20240202175832:160:1",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.6433,
+        "delta": -0.3567,
+        "was_tp": true,
+        "is_tp_after": false
+      },
+      {
+        "key": "20250103141356:64:0",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.9395,
+        "delta": -0.0605,
+        "was_tp": true,
+        "is_tp_after": true
+      },
+      {
+        "key": "20250121200159:0:1",
+        "human_verdict": "kept",
+        "vlm_verdict": "corrected-redrawn",
+        "iou_before": 1.0,
+        "iou_after": 0.9174,
+        "delta": -0.0826,
+        "was_tp": true,
+        "is_tp_after": true
+      }
+    ],
+    "published_claim_check": {
+      "numeros_csv_says": "tp_antes 395 -> tp_depois 387 (marcado 'conferir antes do texto')",
+      "measured_here": "tp_antes 312 -> tp_depois 304",
+      "395_387_found_in_artifacts": false
+    }
+  }
+}

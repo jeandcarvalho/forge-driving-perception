@@ -1,0 +1,60 @@
+{
+  "collection": {
+    "label": "colecao curada",
+    "frames": 4364,
+    "objects": 27479,
+    "empty": 19,
+    "per_frame": 6.296746104491293,
+    "empty_pct": 0.43538038496791936
+  },
+  "old": [
+    {
+      "label": "aleatorio random-n4364-s42",
+      "frames": 4364,
+      "objects": 17048,
+      "empty": 926,
+      "per_frame": 3.906507791017415,
+      "empty_pct": 21.219065077910173
+    },
+    {
+      "label": "aleatorio random-n4364-s42-acqsall",
+      "frames": 4364,
+      "objects": 9469,
+      "empty": 1225,
+      "per_frame": 2.1697983501374885,
+      "empty_pct": 28.07057745187901
+    }
+  ],
+  "full": [
+    {
+      "label": "aleatorio acervo s42",
+      "frames": 4364,
+      "objects": 14492,
+      "empty": 1134,
+      "per_frame": 3.3208065994500457,
+      "empty_pct": 25.98533455545371
+    },
+    {
+      "label": "aleatorio acervo s43",
+      "frames": 4364,
+      "objects": 14445,
+      "empty": 1127,
+      "per_frame": 3.3100366636113656,
+      "empty_pct": 25.82493125572869
+    },
+    {
+      "label": "aleatorio acervo s44",
+      "frames": 4364,
+      "objects": 14893,
+      "empty": 1091,
+      "per_frame": 3.4126947754353805,
+      "empty_pct": 25.0
+    }
+  ],
+  "mean": {
+    "per_frame": 3.347846012832264,
+    "per_frame_sd": 0.056418254030578124,
+    "empty_pct": 25.6034219370608,
+    "empty_pct_sd": 0.5286972954681394
+  }
+}

@@ -1,0 +1,678 @@
+{
+ "detector_miss": {
+  "n": 25,
+  "top": [
+   {
+    "frame": "20240129194123:80",
+    "gt_class": "car",
+    "gt_origin": "kept",
+    "gt_box_n": [
+     0.68552,
+     0.52602,
+     0.93359,
+     0.77954
+    ],
+    "gt_area_frac": 0.0629,
+    "best_tail_pred_iou>=0.5": {
+     "class": "truck",
+     "conf": 0.199,
+     "iou": 0.676
+    },
+    "claim": "no proposal (conf>=0.25) for this object"
+   },
+   {
+    "frame": "20240129203623:136",
+    "gt_class": "car",
+    "gt_origin": "corrected",
+    "gt_box_n": [
+     0.0,
+     0.58509,
+     0.14355,
+     0.99306
+    ],
+    "gt_area_frac": 0.0586,
+    "best_tail_pred_iou>=0.5": {
+     "class": "car",
+     "conf": 0.063,
+     "iou": 0.529
+    },
+    "claim": "no proposal (conf>=0.25) for this object"
+   },
+   {
+    "frame": "20240201163320:36",
+    "gt_class": "truck",
+    "gt_origin": "added",
+    "gt_box_n": [
+     0.28977,
+     0.4767,
+     0.39291,
+     0.60037
+    ],
+    "gt_area_frac": 0.0128,
+    "best_tail_pred_iou>=0.5": {
+     "class": "truck",
+     "conf": 0.11,
+     "iou": 0.768
+    },
+    "claim": "no proposal (conf>=0.25) for this object"
+   },
+   {
+    "frame": "20240129202623:56",
+    "gt_class": "truck",
+    "gt_origin": "added",
+    "gt_box_n": [
+     0.56802,
+     0.43405,
+     0.63878,
+     0.60676
+    ],
+    "gt_area_frac": 0.0122,
+    "best_tail_pred_iou>=0.5": {
+     "class": "truck",
+     "conf": 0.218,
+     "iou": 0.756
+    },
+    "claim": "no proposal (conf>=0.25) for this object"
+   },
+   {
+    "frame": "20240129153512:264",
+    "gt_class": "truck",
+    "gt_origin": "added",
+    "gt_box_n": [
+     0.4181,
+     0.45416,
+     0.50326,
+     0.57783
+    ],
+    "gt_area_frac": 0.0105,
+    "best_tail_pred_iou>=0.5": {
+     "class": "truck",
+     "conf": 0.009,
+     "iou": 0.607
+    },
+    "claim": "no proposal (conf>=0.25) for this object"
+   },
+   {
+    "frame": "20240103201734:177",
+    "gt_class": "bus",
+    "gt_origin": "added",
+    "gt_box_n": [
+     0.33318,
+     0.4379,
+     0.42833,
+     0.54069
+    ],
+    "gt_area_frac": 0.0098,
+    "best_tail_pred_iou>=0.5": {
+     "class": "truck",
+     "conf": 0.051,
+     "iou": 0.606
+    },
+    "claim": "no proposal (conf>=0.25) for this object"
+   },
+   {
+    "frame": "20240129204623:98",
+    "gt_class": "car",
+    "gt_origin": "added",
+    "gt_box_n": [
+     0.52005,
+     0.50228,
+     0.58841,
+     0.61956
+    ],
+    "gt_area_frac": 0.008,
+    "best_tail_pred_iou>=0.5": {
+     "class": "truck",
+     "conf": 0.168,
+     "iou": 0.709
+    },
+    "claim": "no proposal (conf>=0.25) for this object"
+   },
+   {
+    "frame": "20240129195123:72",
+    "gt_class": "car",
+    "gt_origin": "corrected",
+    "gt_box_n": [
+     0.5552,
+     0.54207,
+     0.62025,
+     0.63328
+    ],
+    "gt_area_frac": 0.0059,
+    "best_tail_pred_iou>=0.5": {
+     "class": "truck",
+     "conf": 0.122,
+     "iou": 0.661
+    },
+    "claim": "no proposal (conf>=0.25) for this object"
+   }
+  ]
+ },
+ "class_correction": {
+  "n": 29,
+  "top": [
+   {
+    "frame": "20240129152013:77",
+    "proposal_id": "raw11x:20240129152013:77:004",
+    "yolo_class": "truck",
+    "conf": 0.753,
+    "vlm_class": "car",
+    "gt_class": "car",
+    "gt_origin": "added",
+    "iou_with_gt": 0.927,
+    "box_area_frac": 0.1022,
+    "proposal_box_n": [
+     0.00033,
+     0.31148,
+     0.15397,
+     0.9767
+    ],
+    "gt_box_n": [
+     0.00192,
+     0.30003,
+     0.15784,
+     0.99299
+    ],
+    "vlm_reason": "The outlined box contains the rear of a white van, which is a car (not a truck). The box is mostly accurate but slightly cropped on the right side and includes some background foliage at the top. The detector's guess of 'truck' is incorrect."
+   },
+   {
+    "frame": "20240129195123:283",
+    "proposal_id": "raw11x:20240129195123:283:000",
+    "yolo_class": "truck",
+    "conf": 0.566,
+    "vlm_class": "car",
+    "gt_class": "car",
+    "gt_origin": "corrected",
+    "iou_with_gt": 0.823,
+    "box_area_frac": 0.0753,
+    "proposal_box_n": [
+     0.67081,
+     0.54729,
+     0.92081,
+     0.84839
+    ],
+    "gt_box_n": [
+     0.65909,
+     0.54619,
+     0.96026,
+     0.84656
+    ],
+    "vlm_reason": "The outlined box contains a vehicle, but it is clearly a car, not a truck. The box is reasonably placed around the vehicle, but slightly too wide on the right and slightly too high on the top, making it a 'needs_nudge' fit."
+   },
+   {
+    "frame": "20240129221622:175",
+    "proposal_id": "raw11x:20240129221622:175:000",
+    "yolo_class": "truck",
+    "conf": 0.878,
+    "vlm_class": "car",
+    "gt_class": "car",
+    "gt_origin": "kept",
+    "iou_with_gt": 0.861,
+    "box_area_frac": 0.0265,
+    "proposal_box_n": [
+     0.64197,
+     0.5761,
+     0.7918,
+     0.7527
+    ],
+    "gt_box_n": [
+     0.64646,
+     0.57204,
+     0.80271,
+     0.75778
+    ],
+    "vlm_reason": "The outlined box contains a white car, not a truck. The detector's guess is incorrect. The box is reasonably placed around the car, but slightly too wide on the right and too high on the top, making it a 'needs_nudge' fit."
+   },
+   {
+    "frame": "20240129201123:10",
+    "proposal_id": "raw11x:20240129201123:10:000",
+    "yolo_class": "truck",
+    "conf": 0.549,
+    "vlm_class": "car",
+    "gt_class": "car",
+    "gt_origin": "kept",
+    "iou_with_gt": 0.86,
+    "box_area_frac": 0.0194,
+    "proposal_box_n": [
+     0.60823,
+     0.57412,
+     0.73383,
+     0.72882
+    ],
+    "gt_box_n": [
+     0.61182,
+     0.57981,
+     0.73974,
+     0.73528
+    ],
+    "vlm_reason": "The outlined box contains a vehicle, but it is clearly a car, not a truck. The box is reasonably placed around the vehicle, but slightly too wide on the right and slightly too high on the top, making it a 'needs_nudge' fit rather than 'tight'."
+   },
+   {
+    "frame": "20240129225122:295",
+    "proposal_id": "raw11x:20240129225122:295:001",
+    "yolo_class": "bus",
+    "conf": 0.507,
+    "vlm_class": "truck",
+    "gt_class": "truck",
+    "gt_origin": "corrected",
+    "iou_with_gt": 0.849,
+    "box_area_frac": 0.0187,
+    "proposal_box_n": [
+     0.50584,
+     0.46634,
+     0.61606,
+     0.63555
+    ],
+    "gt_box_n": [
+     0.50245,
+     0.46352,
+     0.62354,
+     0.645
+    ],
+    "vlm_reason": "The object inside the box is a truck, not a bus. The box is mostly correct but slightly too wide on the right and slightly too high on the top, cropping a bit of the truck's roof and leaving some empty space on the right side. It's not badly placed, just needs minor adjustment."
+   },
+   {
+    "frame": "20240129163448:39",
+    "proposal_id": "raw11x:20240129163448:39:001",
+    "yolo_class": "bus",
+    "conf": 0.88,
+    "vlm_class": "truck",
+    "gt_class": "truck",
+    "gt_origin": "corrected",
+    "iou_with_gt": 0.884,
+    "box_area_frac": 0.016,
+    "proposal_box_n": [
+     0.45611,
+     0.41032,
+     0.53243,
+     0.61994
+    ],
+    "gt_box_n": [
+     0.45214,
+     0.40583,
+     0.53615,
+     0.61852
+    ],
+    "vlm_reason": "The outlined box contains the rear of a large truck with a blue cargo container, not a bus. The box is mostly accurate but slightly cropped on the top and bottom edges, and the left edge is a bit too wide, including some road surface. The detector's guess 'bus' is incorrect."
+   },
+   {
+    "frame": "20240129163448:155",
+    "proposal_id": "raw11x:20240129163448:155:001",
+    "yolo_class": "bus",
+    "conf": 0.875,
+    "vlm_class": "truck",
+    "gt_class": "truck",
+    "gt_origin": "added",
+    "iou_with_gt": 0.861,
+    "box_area_frac": 0.0111,
+    "proposal_box_n": [
+     0.45621,
+     0.44292,
+     0.52267,
+     0.60988
+    ],
+    "gt_box_n": [
+     0.45768,
+     0.44715,
+     0.52844,
+     0.61346
+    ],
+    "vlm_reason": "The object inside the box is a large truck with a blue cargo container, not a bus. The box is mostly correct but slightly cropped on the top and bottom edges, and the left edge is a bit too far right, cutting off part of the truck's cab. It's a good fit but needs minor adjustment."
+   },
+   {
+    "frame": "20240104145941:276",
+    "proposal_id": "raw11x:20240104145941:276:003",
+    "yolo_class": "truck",
+    "conf": 0.715,
+    "vlm_class": "car",
+    "gt_class": "car",
+    "gt_origin": "corrected",
+    "iou_with_gt": 0.915,
+    "box_area_frac": 0.0052,
+    "proposal_box_n": [
+     0.46733,
+     0.49814,
+     0.51813,
+     0.60135
+    ],
+    "gt_box_n": [
+     0.46776,
+     0.49917,
+     0.51708,
+     0.60676
+    ],
+    "vlm_reason": "The outlined box contains a white van, which is a car, not a truck. The box is reasonably placed around the vehicle, but slightly too wide on the right and too tall on the top, making it 'needs_nudge' rather than 'tight'."
+   }
+  ]
+ },
+ "bad_box_accepted": {
+  "n": 186,
+  "top": [
+   {
+    "frame": "20240201163320:133",
+    "proposal_id": "raw11x:20240201163320:133:004",
+    "class": "truck",
+    "conf": 0.43,
+    "vlm_verdict": "corrected-minor",
+    "iou_with_gt": 0.378,
+    "gt_origin": "added",
+    "box_area_frac": 0.0063,
+    "gt_area_frac": 0.0168,
+    "proposal_box_n": [
+     0.27687,
+     0.46015,
+     0.33178,
+     0.57576
+    ],
+    "gt_box_n": [
+     0.27418,
+     0.44685,
+     0.39171,
+     0.5897
+    ],
+    "vlm_reason": "The box correctly identifies the truck, but it is slightly cropped on the right side and the top edge is a bit too high, cutting off part of the cab's roofline. The fit is acceptable but not tight."
+   },
+   {
+    "frame": "20240129201623:146",
+    "proposal_id": "raw11x:20240129201623:146:001",
+    "class": "car",
+    "conf": 0.265,
+    "vlm_verdict": "corrected-minor",
+    "iou_with_gt": 0.45,
+    "gt_origin": "corrected",
+    "box_area_frac": 0.011,
+    "gt_area_frac": 0.0073,
+    "proposal_box_n": [
+     0.68645,
+     0.49599,
+     0.77916,
+     0.61499
+    ],
+    "gt_box_n": [
+     0.6812,
+     0.53714,
+     0.75932,
+     0.62996
+    ],
+    "vlm_reason": "The box correctly identifies the red tail lights of a car, but it is slightly too wide and includes some background noise on the right side. The object is clearly present and the class is correct, but the box is not perfectly tight."
+   },
+   {
+    "frame": "20240129182757:258",
+    "proposal_id": "raw11x:20240129182757:258:000",
+    "class": "car",
+    "conf": 0.838,
+    "vlm_verdict": "corrected-minor",
+    "iou_with_gt": 0.463,
+    "gt_origin": "corrected",
+    "box_area_frac": 0.0089,
+    "gt_area_frac": 0.0191,
+    "proposal_box_n": [
+     0.15388,
+     0.52089,
+     0.23956,
+     0.62423
+    ],
+    "gt_box_n": [
+     0.13303,
+     0.48358,
+     0.26584,
+     0.62765
+    ],
+    "vlm_reason": "The box correctly identifies the white van, which is a car. However, the box is slightly too wide on the right side and slightly too high on the top, cropping a bit of the vehicle's roof and leaving some empty space on the left. It's a good fit but needs minor adjustment."
+   },
+   {
+    "frame": "20240201164822:268",
+    "proposal_id": "raw11x:20240201164822:268:005",
+    "class": "truck",
+    "conf": 0.37,
+    "vlm_verdict": "corrected-minor",
+    "iou_with_gt": 0.466,
+    "gt_origin": "added",
+    "box_area_frac": 0.0061,
+    "gt_area_frac": 0.013,
+    "proposal_box_n": [
+     0.21953,
+     0.51206,
+     0.33087,
+     0.56657
+    ],
+    "gt_box_n": [
+     0.21901,
+     0.45964,
+     0.33654,
+     0.57051
+    ],
+    "vlm_reason": "The box correctly identifies a truck under the overpass. The truck is a flatbed type, and the box covers the main body, but it is slightly cropped on the right side and the top edge is a bit loose, not tightly hugging the vehicle's outline."
+   },
+   {
+    "frame": "20240201164822:89",
+    "proposal_id": "raw11x:20240201164822:89:009",
+    "class": "bus",
+    "conf": 0.478,
+    "vlm_verdict": "corrected-minor",
+    "iou_with_gt": 0.553,
+    "gt_origin": "added",
+    "box_area_frac": 0.004,
+    "gt_area_frac": 0.0073,
+    "proposal_box_n": [
+     0.86324,
+     0.4756,
+     0.94819,
+     0.52303
+    ],
+    "gt_box_n": [
+     0.86066,
+     0.46604,
+     0.95302,
+     0.54493
+    ],
+    "vlm_reason": "The box correctly identifies the bus, but it is slightly cropped on the right side and the top edge is a bit too high, cutting off part of the bus's roofline. The left edge is also slightly too far left, missing a bit of the bus's front. This is a minor misalignment, not a bad fit, so 'needs_nudge' is appropriate."
+   },
+   {
+    "frame": "20240129174445:34",
+    "proposal_id": "raw11x:20240129174445:34:001",
+    "class": "bus",
+    "conf": 0.836,
+    "vlm_verdict": "corrected-minor",
+    "iou_with_gt": 0.581,
+    "gt_origin": "added",
+    "box_area_frac": 0.0097,
+    "gt_area_frac": 0.0168,
+    "proposal_box_n": [
+     0.22211,
+     0.42423,
+     0.32582,
+     0.51815
+    ],
+    "gt_box_n": [
+     0.20901,
+     0.40556,
+     0.33762,
+     0.5359
+    ],
+    "vlm_reason": "The box correctly identifies the bus, but it is slightly cropped on the right side and the bottom edge is a bit too low, cutting off part of the vehicle's lower body. The top edge is also slightly too high, cutting off the very top of the bus. This is a minor misalignment, not a bad placement, so 'needs_nudge' is appropriate."
+   },
+   {
+    "frame": "20240129205123:102",
+    "proposal_id": "raw11x:20240129205123:102:000",
+    "class": "truck",
+    "conf": 0.616,
+    "vlm_verdict": "corrected-minor",
+    "iou_with_gt": 0.584,
+    "gt_origin": "corrected",
+    "box_area_frac": 0.0338,
+    "gt_area_frac": 0.032,
+    "proposal_box_n": [
+     0.5388,
+     0.4282,
+     0.67737,
+     0.67179
+    ],
+    "gt_box_n": [
+     0.54099,
+     0.49389,
+     0.71094,
+     0.68232
+    ],
+    "vlm_reason": "The box correctly identifies the truck, which is visible by its red taillights and cargo. However, the box is slightly too wide on the right and too tall on the top, cropping some of the truck's structure and including some background. It is not a tight fit but still contains the object."
+   },
+   {
+    "frame": "20240129160948:271",
+    "proposal_id": "raw11x:20240129160948:271:000",
+    "class": "car",
+    "conf": 0.894,
+    "vlm_verdict": "corrected-minor",
+    "iou_with_gt": 0.612,
+    "gt_origin": "corrected",
+    "box_area_frac": 0.0081,
+    "gt_area_frac": 0.0133,
+    "proposal_box_n": [
+     0.32277,
+     0.56664,
+     0.40388,
+     0.66694
+    ],
+    "gt_box_n": [
+     0.30957,
+     0.55795,
+     0.41597,
+     0.68295
+    ],
+    "vlm_reason": "The box correctly identifies the dark-colored car. However, it is slightly too wide on the left and too tall on the top, cropping the car's roofline and extending slightly beyond the car's left edge. This is a minor misalignment, not a severe error, so 'needs_nudge' is appropriate."
+   }
+  ]
+ },
+ "false_positive_rejected": {
+  "n": 28,
+  "top": [
+   {
+    "frame": "20240129195623:299",
+    "proposal_id": "raw11x:20240129195623:299:001",
+    "class": "car",
+    "conf": 0.268,
+    "max_iou_any_gt": 0.0,
+    "same_region_explicitly_rejected_by_human": false,
+    "box_area_frac": 0.0141,
+    "proposal_box_n": [
+     0.40844,
+     0.50553,
+     0.50009,
+     0.65913
+    ],
+    "vlm_reason": "The box is centered on the intense glare of oncoming headlights, not on any actual vehicle. The bright light source is the dominant feature within the box, and there is no discernible car shape or body within the highlighted area. The detector has misidentified the glare as a car."
+   },
+   {
+    "frame": "20240129192119:270",
+    "proposal_id": "raw11x:20240129192119:270:003",
+    "class": "bus",
+    "conf": 0.279,
+    "max_iou_any_gt": 0.0,
+    "same_region_explicitly_rejected_by_human": false,
+    "box_area_frac": 0.0114,
+    "proposal_box_n": [
+     0.79809,
+     0.42789,
+     0.86994,
+     0.58653
+    ],
+    "vlm_reason": "The box contains only a bright glare and reflections from distant lights, not a vehicle. The detector incorrectly labeled it as a 'bus'. The box is poorly placed, covering a non-object area."
+   },
+   {
+    "frame": "20240129212623:147",
+    "proposal_id": "raw11x:20240129212623:147:001",
+    "class": "car",
+    "conf": 0.33,
+    "max_iou_any_gt": 0.0,
+    "same_region_explicitly_rejected_by_human": false,
+    "box_area_frac": 0.0067,
+    "proposal_box_n": [
+     0.34633,
+     0.49322,
+     0.40793,
+     0.60251
+    ],
+    "vlm_reason": "The box is centered on a bright glare from a headlight, not on a car. The detector misidentified the glare as a car. The box is poorly placed, covering only the glare and not the actual vehicle."
+   },
+   {
+    "frame": "20240129182256:215",
+    "proposal_id": "raw11x:20240129182256:215:003",
+    "class": "truck",
+    "conf": 0.251,
+    "max_iou_any_gt": 0.0,
+    "same_region_explicitly_rejected_by_human": false,
+    "box_area_frac": 0.0014,
+    "proposal_box_n": [
+     0.55622,
+     0.5192,
+     0.58075,
+     0.57766
+    ],
+    "vlm_reason": "The pink box outlines a section of the road and trees, not a vehicle. The detector's guess of 'truck' is incorrect. The box is poorly placed, covering nothing meaningful and not even containing a vehicle."
+   },
+   {
+    "frame": "20240201164321:108",
+    "proposal_id": "raw11x:20240201164321:108:007",
+    "class": "car",
+    "conf": 0.401,
+    "max_iou_any_gt": 0.0,
+    "same_region_explicitly_rejected_by_human": false,
+    "box_area_frac": 0.0013,
+    "proposal_box_n": [
+     8e-05,
+     0.58233,
+     0.01665,
+     0.66111
+    ],
+    "vlm_reason": "The pink box outlines a very small, dark, vertical shape on the left side of the road, which appears to be a person standing or sitting near the roadside. The detector's guess of 'car' is incorrect. The box is poorly placed — it's too narrow and vertically oriented for a car, and it doesn't encompass any part of a vehicle. It's more consistent with a person, though the image is too blurry to be ce"
+   },
+   {
+    "frame": "20240201191154:291",
+    "proposal_id": "raw11x:20240201191154:291:007",
+    "class": "car",
+    "conf": 0.305,
+    "max_iou_any_gt": 0.0,
+    "same_region_explicitly_rejected_by_human": false,
+    "box_area_frac": 0.0007,
+    "proposal_box_n": [
+     0.22689,
+     0.55602,
+     0.25509,
+     0.58052
+    ],
+    "vlm_reason": "The box is placed on a dark, non-reflective area of the road surface, not on any actual vehicle. The highlighted area is a glare or reflection from a streetlight, not a car. The detector incorrectly identified this as a car."
+   },
+   {
+    "frame": "20240104145941:0",
+    "proposal_id": "raw11x:20240104145941:0:012",
+    "class": "car",
+    "conf": 0.253,
+    "max_iou_any_gt": 0.0,
+    "same_region_explicitly_rejected_by_human": false,
+    "box_area_frac": 0.0005,
+    "proposal_box_n": [
+     0.52247,
+     0.36637,
+     0.53697,
+     0.39881
+    ],
+    "vlm_reason": "The pink box is drawn over a very small, almost non-existent area of the image. It appears to be a misalignment or a glitch in the detection, as there is no discernible car or object within that tiny region. The box is not capturing any real object, making it 'badly_placed' in the sense that it's incorrectly positioned and does not contain a valid object."
+   },
+   {
+    "frame": "20240129182256:215",
+    "proposal_id": "raw11x:20240129182256:215:002",
+    "class": "truck",
+    "conf": 0.282,
+    "max_iou_any_gt": 0.0,
+    "same_region_explicitly_rejected_by_human": false,
+    "box_area_frac": 0.0004,
+    "proposal_box_n": [
+     0.54055,
+     0.55321,
+     0.55678,
+     0.57905
+    ],
+    "vlm_reason": "The box is centered on a white rectangular signpost, not a vehicle. The detector's guess of 'truck' is incorrect. The box is poorly placed as it covers only a small part of the signpost, not the object it's supposed to detect."
+   }
+  ]
+ }
+}

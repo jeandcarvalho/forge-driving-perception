@@ -1,0 +1,146 @@
+{
+  "generated_at": "2026-09-08T15:01:29.902Z",
+  "collection_round2": "<CARCARA_ROUND2_COLLECTION_ID>",
+  "collection_round1": "<CARCARA_COLLECTION_ID>",
+  "complete": true,
+  "frames": {
+    "total": 63,
+    "reviewed_round2": 63
+  },
+  "thresholds": {
+    "iou_minor": 0.7,
+    "iou_match_added": 0.5,
+    "note": "class-changed tem precedencia sobre corrected-minor/redrawn (mesma convencao de curation/stats.ts)"
+  },
+  "proposal_level": {
+    "comparable_n": 112,
+    "decided_only_annotator1": 0,
+    "decided_only_annotator2": 0,
+    "exact_agreement": 96,
+    "percent_agreement": 85.714,
+    "cohens_kappa": 0.742,
+    "kappa_se": 0.06,
+    "kappa_ci95": {
+      "lo": 0.625,
+      "hi": 0.859,
+      "method": "aproximacao normal de amostra grande (kappa +- 1.96*EP)"
+    },
+    "p_observed": 0.857,
+    "p_expected": 0.446,
+    "verdict_order": [
+      "kept",
+      "corrected-minor",
+      "corrected-redrawn",
+      "class-changed",
+      "rejected"
+    ],
+    "marginals_annotator1": {
+      "kept": 69,
+      "corrected-minor": 13,
+      "corrected-redrawn": 11,
+      "class-changed": 13,
+      "rejected": 6
+    },
+    "marginals_annotator2": {
+      "kept": 75,
+      "corrected-minor": 7,
+      "corrected-redrawn": 11,
+      "class-changed": 14,
+      "rejected": 5
+    },
+    "confusion_matrix_5x5": {
+      "kept": {
+        "kept": 65,
+        "corrected-minor": 3,
+        "corrected-redrawn": 0,
+        "class-changed": 1,
+        "rejected": 0
+      },
+      "corrected-minor": {
+        "kept": 9,
+        "corrected-minor": 4,
+        "corrected-redrawn": 0,
+        "class-changed": 0,
+        "rejected": 0
+      },
+      "corrected-redrawn": {
+        "kept": 0,
+        "corrected-minor": 0,
+        "corrected-redrawn": 10,
+        "class-changed": 0,
+        "rejected": 1
+      },
+      "class-changed": {
+        "kept": 0,
+        "corrected-minor": 0,
+        "corrected-redrawn": 0,
+        "class-changed": 13,
+        "rejected": 0
+      },
+      "rejected": {
+        "kept": 1,
+        "corrected-minor": 0,
+        "corrected-redrawn": 1,
+        "class-changed": 0,
+        "rejected": 4
+      }
+    }
+  },
+  "class_level": {
+    "comparable_n": 105,
+    "agreement": 104,
+    "percent": 99.048,
+    "class_changes_annotator1": 13,
+    "class_changes_annotator2": 14,
+    "both_class_changed_n": 13,
+    "both_class_changed_agree": 13,
+    "disagreements": [
+      {
+        "frame": "20240201191154:291",
+        "a": "car",
+        "b": "bus",
+        "va": "kept",
+        "vb": "class-changed"
+      }
+    ]
+  },
+  "geometry": {
+    "both_corrected_n": 27,
+    "mean_iou": 0.919,
+    "median_iou": 0.967,
+    "q1_iou": 0.854,
+    "q3_iou": 1,
+    "min_iou": 0.679,
+    "max_iou": 1,
+    "n_iou_ge_050": 27,
+    "pct_iou_ge_050": 100,
+    "n_iou_ge_070": 25,
+    "pct_iou_ge_070": 92.593,
+    "distribution": {
+      "<0.5": 0,
+      "0.5-0.7": 2,
+      "0.7-0.9": 6,
+      ">=0.9": 19
+    }
+  },
+  "added_objects": {
+    "annotator1": 49,
+    "annotator2": 55,
+    "matched_geometric": 44,
+    "unmatched_annotator1": 5,
+    "unmatched_annotator2": 11,
+    "class_agreement_in_matched": 43,
+    "class_agreement_pct": 97.727,
+    "class_disagreements": [
+      {
+        "frame": "20240129153512:186",
+        "a": "bicycle",
+        "b": "motorcycle",
+        "iou": 0.79
+      }
+    ],
+    "matched_same_class_constrained": 43,
+    "match_rule": "one-to-one guloso por IoU decrescente, IoU >= 0.5; matching PRIMARIO so por geometria (a classe e medida, nao imposta); \"matched_same_class_constrained\" repete o matching exigindo mesma classe",
+    "note": "fora do Cohen kappa dos vereditos das proposals"
+  }
+}

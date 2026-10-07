@@ -1,0 +1,112 @@
+% =====================================================================
+% Pillar 1 - near-duplicate rate: definicao formal + tabela
+% Fonte da implementacao: paper/spacing_full.py
+% Reimplementacao auditada: paper/repro/analyze_spacing_and_dup.py
+% Valores: paper/repro/pillar1-spacing-nearduplicate.json
+% Gerado em 2026-09-07. Nao editar o paper: colar daqui.
+% =====================================================================
+
+% ---------------------------------------------------------------------
+% BLOCO 1 - definicao (para a secao de metodo)
+% ---------------------------------------------------------------------
+
+Let $\mathcal{A}$ be the set of acquisitions and, for $a \in \mathcal{A}$, let
+$F_a$ be the frames of acquisition $a$ that carry a valid GPS fix. Frames
+without a GPS fix are discarded. Distances are geodesic (haversine) on a sphere
+of radius $R = 6\,371\,008.8$~m.
+
+For a frame $f \in F_a$ we define its nearest-neighbour distance
+\emph{within its own acquisition}
+%
+\begin{equation}
+  \mathrm{nn}(f) \;=\; \min_{g \in F_a,\; g \neq f} d_{\mathrm{hav}}(f, g),
+  \label{eq:nn}
+\end{equation}
+%
+which is defined only when $|F_a| \ge 2$. Accordingly the evaluation universe is
+%
+\begin{equation}
+  U \;=\; \bigl\{\, f \in F_a \;:\; a \in \mathcal{A},\; |F_a| \ge 2 \,\bigr\},
+  \label{eq:universe}
+\end{equation}
+%
+so that acquisitions contributing a single geolocated frame are excluded
+entirely: they contribute to neither numerator nor denominator. The
+near-duplicate rate at threshold $t$ is then
+%
+\begin{equation}
+  \mathrm{NDR}(t) \;=\;
+  \frac{\bigl|\{\, f \in U \;:\; \mathrm{nn}(f) < t \,\}\bigr|}{|U|}.
+  \label{eq:ndr}
+\end{equation}
+%
+Each frame is counted at most once in the numerator: $\mathrm{NDR}$ is a
+per-frame statistic, not a pair statistic. Frames are never compared across
+acquisitions, so the measure captures redundancy \emph{within} a recording and
+never penalises two recordings that revisit the same road. We report
+$t = 10$~m and $t = 25$~m.
+
+% ---------------------------------------------------------------------
+% BLOCO 2 - tabela
+% ---------------------------------------------------------------------
+
+\begin{table}[t]
+\centering
+\caption{Within-acquisition near-duplicate rate. $\mathrm{NDR}(t)$ is the
+fraction of frames whose nearest neighbour from the same acquisition lies closer
+than $t$ (Eq.~\ref{eq:ndr}); $|U|$ is the evaluation universe of
+Eq.~\ref{eq:universe}. The random arm draws the same number of frames
+uniformly from the same 80{,}584-frame archive, with no exclusion and no
+spacing constraint; it is repeated over ten seeds (42--51) and reported as
+mean\,$\pm$\,s.d.}
+\label{tab:nearduplicate}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Frame set & $|U|$ & $\mathrm{NDR}(10\,\mathrm{m})$ & $\mathrm{NDR}(25\,\mathrm{m})$ & median $\mathrm{nn}$ \\
+\midrule
+Curated collection ($n{=}4364$) & 4360 & \textbf{0.09\%} & \textbf{0.18\%} & 36.7~m \\
+Random, matched $n$, 10 seeds   & $4360.4 \pm 1.6$ & $13.65 \pm 0.57\%$ & $22.92 \pm 0.61\%$ & $88.7 \pm 2.9$~m \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ---------------------------------------------------------------------
+% BLOCO 3 - caption alternativa, uma frase
+% ---------------------------------------------------------------------
+% \caption{Within-acquisition near-duplicate rate: the fraction of frames whose
+% nearest same-acquisition neighbour lies closer than $t$ metres, computed over
+% geolocated frames belonging to acquisitions with at least two such frames
+% ($|U|$). The curated collection is two orders of magnitude less redundant than
+% a size-matched random draw from the same corpus.}
+
+% ---------------------------------------------------------------------
+% NOTA DE RODAPE OBRIGATORIA se |U| nao aparecer na tabela
+% ---------------------------------------------------------------------
+% \footnote{Four of the 4364 collection frames belong to acquisitions that
+% contribute a single frame and are therefore outside $U$; no frame lacks a GPS
+% fix. Reporting the rate for the 313-frame reference set would exclude 39 of
+% its 127 acquisitions ($|U| = 274$), so that denominator must be stated
+% explicitly if the statistic is quoted for the reference set.}
+
+% ---------------------------------------------------------------------
+% AVISO DE PROVENIENCIA - ler antes de trocar qualquer numero desta tabela
+% ---------------------------------------------------------------------
+% O braco aleatorio acima e o do EXPERIMENTO PRINCIPAL:
+%   arquivos  arms/random-n4364-s{42..51}-full.json
+%   pool      80.584 frames (acervo inteiro), exclude_mode = none
+%   sementes  42..51; media +- desvio padrao AMOSTRAL (n-1)
+%   fonte     paper/pillar1_naive.json -> chave "full"
+%   valores   NDR(10) = 13,6547 +- 0,5690 %   NDR(25) = 22,9198 +- 0,6062 %
+%
+% NAO usar 23,71 % / 40,50 %. Esses vem de arms/random-n4364-s42.json,
+% um controle de 16/08/2026 com semente unica cujo pool NAO e o acervo:
+% exclude_mode = acqs remove as 127 gravacoes de teste e reduz o pool a
+% 42.831 frames. O desenho foi SUPERADO por enviesar o proprio controle
+% (67 % dos frames sorteados caem num unico dia de coleta, contra 36 % no
+% braco principal). A METRICA e identica nos dois; o que muda e a
+% POPULACAO amostrada. Ver docstring de paper/pillar1_naive.py.
+%
+% Razoes com o braco principal:
+%   10 m: 0,09 % contra 13,65 %  ->  149x menos
+%   25 m: 0,18 % contra 22,92 %  ->  125x menos

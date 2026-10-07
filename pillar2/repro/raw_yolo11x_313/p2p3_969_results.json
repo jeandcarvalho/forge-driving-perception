@@ -1,0 +1,628 @@
+{
+ "_meta": {
+  "proposals_frozen": 969,
+  "gt": 731,
+  "link_iou": 0.1,
+  "correct_iou_c2": 0.7,
+  "vlm_run": "C:\\Users\\REPRO_USER\\Documents\\carcara-forge\\paper\\repro\\raw_yolo11x_313\\vlm_v2_969",
+  "rows_with_error": 0
+ },
+ "C1": {
+  "yolo": {
+   "0.5": {
+    "detections": 969,
+    "tp": 602,
+    "fp": 367,
+    "fn": 129,
+    "precision": 62.1,
+    "recall": 82.4,
+    "f1": 70.8,
+    "tp_iou_mean": 0.7825,
+    "tide": {
+     "fp_localization": 64,
+     "fp_classification": 75,
+     "fp_both": 22,
+     "fp_duplicate": 1,
+     "fp_background": 205
+    },
+    "per_class": {
+     "car": {
+      "gt": 427,
+      "detections": 552,
+      "tp": 359,
+      "fp": 193,
+      "fn": 68,
+      "precision": 65.0,
+      "recall": 84.1,
+      "f1": 73.3
+     },
+     "truck": {
+      "gt": 255,
+      "detections": 328,
+      "tp": 213,
+      "fp": 115,
+      "fn": 42,
+      "precision": 64.9,
+      "recall": 83.5,
+      "f1": 73.1
+     }
+    }
+   },
+   "0.75": {
+    "detections": 969,
+    "tp": 367,
+    "fp": 602,
+    "fn": 364,
+    "precision": 37.9,
+    "recall": 50.2,
+    "f1": 43.2,
+    "tp_iou_mean": 0.8653,
+    "tide": {
+     "fp_localization": 300,
+     "fp_classification": 43,
+     "fp_both": 54,
+     "fp_duplicate": 0,
+     "fp_background": 205
+    },
+    "per_class": {
+     "car": {
+      "gt": 427,
+      "detections": 552,
+      "tp": 198,
+      "fp": 354,
+      "fn": 229,
+      "precision": 35.9,
+      "recall": 46.4,
+      "f1": 40.4
+     },
+     "truck": {
+      "gt": 255,
+      "detections": 328,
+      "tp": 154,
+      "fp": 174,
+      "fn": 101,
+      "precision": 47.0,
+      "recall": 60.4,
+      "f1": 52.8
+     }
+    }
+   }
+  },
+  "yolo_vlm": {
+   "0.5": {
+    "detections": 939,
+    "tp": 628,
+    "fp": 311,
+    "fn": 103,
+    "precision": 66.9,
+    "recall": 85.9,
+    "f1": 75.2,
+    "tp_iou_mean": 0.7821,
+    "tide": {
+     "fp_localization": 70,
+     "fp_classification": 29,
+     "fp_both": 17,
+     "fp_duplicate": 18,
+     "fp_background": 177
+    },
+    "per_class": {
+     "car": {
+      "gt": 427,
+      "detections": 565,
+      "tp": 378,
+      "fp": 187,
+      "fn": 49,
+      "precision": 66.9,
+      "recall": 88.5,
+      "f1": 76.2
+     },
+     "truck": {
+      "gt": 255,
+      "detections": 296,
+      "tp": 219,
+      "fp": 77,
+      "fn": 36,
+      "precision": 74.0,
+      "recall": 85.9,
+      "f1": 79.5
+     }
+    }
+   },
+   "0.75": {
+    "detections": 939,
+    "tp": 383,
+    "fp": 556,
+    "fn": 348,
+    "precision": 40.8,
+    "recall": 52.4,
+    "f1": 45.9,
+    "tp_iou_mean": 0.8652,
+    "tide": {
+     "fp_localization": 325,
+     "fp_classification": 14,
+     "fp_both": 32,
+     "fp_duplicate": 8,
+     "fp_background": 177
+    },
+    "per_class": {
+     "car": {
+      "gt": 427,
+      "detections": 565,
+      "tp": 213,
+      "fp": 352,
+      "fn": 214,
+      "precision": 37.7,
+      "recall": 49.9,
+      "f1": 42.9
+     },
+     "truck": {
+      "gt": 255,
+      "detections": 296,
+      "tp": 156,
+      "fp": 140,
+      "fn": 99,
+      "precision": 52.7,
+      "recall": 61.2,
+      "f1": 56.6
+     }
+    }
+   }
+  }
+ },
+ "C2": {
+  "yolo": {
+   "retained": 969,
+   "correct": 438,
+   "incorrect": 531,
+   "not_recovered": 293,
+   "gt_total": 731,
+   "reachable_by_detector": 698,
+   "not_proposed": 33,
+   "precision": 45.2,
+   "coverage_of_gt": 59.9,
+   "reachable_coverage": 62.8,
+   "per_class": {
+    "car": {
+     "gt": 427,
+     "reachable": 414,
+     "retained": 552,
+     "correct": 242,
+     "precision": 43.8,
+     "coverage_of_gt": 56.7,
+     "reachable_coverage": 58.5
+    },
+    "truck": {
+     "gt": 255,
+     "reachable": 239,
+     "retained": 328,
+     "correct": 178,
+     "precision": 54.3,
+     "coverage_of_gt": 69.8,
+     "reachable_coverage": 74.5
+    }
+   }
+  },
+  "yolo_vlm": {
+   "retained": 939,
+   "correct": 454,
+   "incorrect": 485,
+   "not_recovered": 277,
+   "gt_total": 731,
+   "reachable_by_detector": 698,
+   "not_proposed": 33,
+   "precision": 48.3,
+   "coverage_of_gt": 62.1,
+   "reachable_coverage": 65.0,
+   "per_class": {
+    "car": {
+     "gt": 427,
+     "reachable": 414,
+     "retained": 565,
+     "correct": 257,
+     "precision": 45.5,
+     "coverage_of_gt": 60.2,
+     "reachable_coverage": 62.1
+    },
+    "truck": {
+     "gt": 255,
+     "reachable": 239,
+     "retained": 296,
+     "correct": 181,
+     "precision": 61.1,
+     "coverage_of_gt": 71.0,
+     "reachable_coverage": 75.7
+    }
+   }
+  }
+ },
+ "diff": {
+  "C1@0.5": {
+   "detections": {
+    "yolo": 969,
+    "yolo_vlm": 939,
+    "abs": -30,
+    "rel_pct": -3.1
+   },
+   "tp": {
+    "yolo": 602,
+    "yolo_vlm": 628,
+    "abs": 26,
+    "rel_pct": 4.3
+   },
+   "fp": {
+    "yolo": 367,
+    "yolo_vlm": 311,
+    "abs": -56,
+    "rel_pct": -15.3
+   },
+   "fn": {
+    "yolo": 129,
+    "yolo_vlm": 103,
+    "abs": -26,
+    "rel_pct": -20.2
+   },
+   "precision": {
+    "yolo": 62.1,
+    "yolo_vlm": 66.9,
+    "abs": 4.8,
+    "rel_pct": 7.7
+   },
+   "recall": {
+    "yolo": 82.4,
+    "yolo_vlm": 85.9,
+    "abs": 3.5,
+    "rel_pct": 4.2
+   },
+   "f1": {
+    "yolo": 70.8,
+    "yolo_vlm": 75.2,
+    "abs": 4.4,
+    "rel_pct": 6.2
+   }
+  },
+  "C1@0.75": {
+   "detections": {
+    "yolo": 969,
+    "yolo_vlm": 939,
+    "abs": -30,
+    "rel_pct": -3.1
+   },
+   "tp": {
+    "yolo": 367,
+    "yolo_vlm": 383,
+    "abs": 16,
+    "rel_pct": 4.4
+   },
+   "fp": {
+    "yolo": 602,
+    "yolo_vlm": 556,
+    "abs": -46,
+    "rel_pct": -7.6
+   },
+   "fn": {
+    "yolo": 364,
+    "yolo_vlm": 348,
+    "abs": -16,
+    "rel_pct": -4.4
+   },
+   "precision": {
+    "yolo": 37.9,
+    "yolo_vlm": 40.8,
+    "abs": 2.9,
+    "rel_pct": 7.7
+   },
+   "recall": {
+    "yolo": 50.2,
+    "yolo_vlm": 52.4,
+    "abs": 2.2,
+    "rel_pct": 4.4
+   },
+   "f1": {
+    "yolo": 43.2,
+    "yolo_vlm": 45.9,
+    "abs": 2.7,
+    "rel_pct": 6.2
+   }
+  },
+  "C2": {
+   "retained": {
+    "yolo": 969,
+    "yolo_vlm": 939,
+    "abs": -30,
+    "rel_pct": -3.1
+   },
+   "correct": {
+    "yolo": 438,
+    "yolo_vlm": 454,
+    "abs": 16,
+    "rel_pct": 3.7
+   },
+   "incorrect": {
+    "yolo": 531,
+    "yolo_vlm": 485,
+    "abs": -46,
+    "rel_pct": -8.7
+   },
+   "precision": {
+    "yolo": 45.2,
+    "yolo_vlm": 48.3,
+    "abs": 3.1,
+    "rel_pct": 6.9
+   },
+   "coverage_of_gt": {
+    "yolo": 59.9,
+    "yolo_vlm": 62.1,
+    "abs": 2.2,
+    "rel_pct": 3.7
+   },
+   "reachable_coverage": {
+    "yolo": 62.8,
+    "yolo_vlm": 65.0,
+    "abs": 2.2,
+    "rel_pct": 3.5
+   }
+  },
+  "C1@0.5_car": {
+   "detections": {
+    "yolo": 552,
+    "yolo_vlm": 565,
+    "abs": 13,
+    "rel_pct": 2.4
+   },
+   "tp": {
+    "yolo": 359,
+    "yolo_vlm": 378,
+    "abs": 19,
+    "rel_pct": 5.3
+   },
+   "fp": {
+    "yolo": 193,
+    "yolo_vlm": 187,
+    "abs": -6,
+    "rel_pct": -3.1
+   },
+   "fn": {
+    "yolo": 68,
+    "yolo_vlm": 49,
+    "abs": -19,
+    "rel_pct": -27.9
+   },
+   "precision": {
+    "yolo": 65.0,
+    "yolo_vlm": 66.9,
+    "abs": 1.9,
+    "rel_pct": 2.9
+   },
+   "recall": {
+    "yolo": 84.1,
+    "yolo_vlm": 88.5,
+    "abs": 4.4,
+    "rel_pct": 5.2
+   },
+   "f1": {
+    "yolo": 73.3,
+    "yolo_vlm": 76.2,
+    "abs": 2.9,
+    "rel_pct": 4.0
+   }
+  },
+  "C2_car": {
+   "retained": {
+    "yolo": 552,
+    "yolo_vlm": 565,
+    "abs": 13,
+    "rel_pct": 2.4
+   },
+   "correct": {
+    "yolo": 242,
+    "yolo_vlm": 257,
+    "abs": 15,
+    "rel_pct": 6.2
+   },
+   "precision": {
+    "yolo": 43.8,
+    "yolo_vlm": 45.5,
+    "abs": 1.7,
+    "rel_pct": 3.9
+   },
+   "coverage_of_gt": {
+    "yolo": 56.7,
+    "yolo_vlm": 60.2,
+    "abs": 3.5,
+    "rel_pct": 6.2
+   },
+   "reachable_coverage": {
+    "yolo": 58.5,
+    "yolo_vlm": 62.1,
+    "abs": 3.6,
+    "rel_pct": 6.2
+   }
+  },
+  "C1@0.5_truck": {
+   "detections": {
+    "yolo": 328,
+    "yolo_vlm": 296,
+    "abs": -32,
+    "rel_pct": -9.8
+   },
+   "tp": {
+    "yolo": 213,
+    "yolo_vlm": 219,
+    "abs": 6,
+    "rel_pct": 2.8
+   },
+   "fp": {
+    "yolo": 115,
+    "yolo_vlm": 77,
+    "abs": -38,
+    "rel_pct": -33.0
+   },
+   "fn": {
+    "yolo": 42,
+    "yolo_vlm": 36,
+    "abs": -6,
+    "rel_pct": -14.3
+   },
+   "precision": {
+    "yolo": 64.9,
+    "yolo_vlm": 74.0,
+    "abs": 9.1,
+    "rel_pct": 14.0
+   },
+   "recall": {
+    "yolo": 83.5,
+    "yolo_vlm": 85.9,
+    "abs": 2.4,
+    "rel_pct": 2.9
+   },
+   "f1": {
+    "yolo": 73.1,
+    "yolo_vlm": 79.5,
+    "abs": 6.4,
+    "rel_pct": 8.8
+   }
+  },
+  "C2_truck": {
+   "retained": {
+    "yolo": 328,
+    "yolo_vlm": 296,
+    "abs": -32,
+    "rel_pct": -9.8
+   },
+   "correct": {
+    "yolo": 178,
+    "yolo_vlm": 181,
+    "abs": 3,
+    "rel_pct": 1.7
+   },
+   "precision": {
+    "yolo": 54.3,
+    "yolo_vlm": 61.1,
+    "abs": 6.8,
+    "rel_pct": 12.5
+   },
+   "coverage_of_gt": {
+    "yolo": 69.8,
+    "yolo_vlm": 71.0,
+    "abs": 1.2,
+    "rel_pct": 1.7
+   },
+   "reachable_coverage": {
+    "yolo": 74.5,
+    "yolo_vlm": 75.7,
+    "abs": 1.2,
+    "rel_pct": 1.6
+   }
+  }
+ },
+ "vlm_actions": {
+  "verdicts": {
+   "corrected-minor": 642,
+   "kept": 195,
+   "class-changed": 86,
+   "rejected": 30,
+   "corrected-redrawn": 16
+  },
+  "box_retained": 939,
+  "rejected": 30,
+  "class_changed": 86,
+  "class_changed_to": {
+   "truck->car": 44,
+   "bus->truck": 15,
+   "person->motorcycle": 9,
+   "car->truck": 5,
+   "car->motorcycle": 4,
+   "bus->car": 3,
+   "truck->motorcycle": 2,
+   "car->person": 1,
+   "truck->bus": 1,
+   "car->bus": 1,
+   "person->bicycle": 1
+  },
+  "class_changed_to_gt_class": 31,
+  "class_changed_wrong_or_unlinked": 55,
+  "rejected_by_geometric_truth": {
+   "rejected": 28,
+   "redrawn": 1,
+   "class-changed": 1
+  },
+  "truth_x_vlm": {
+   "class-changed | class-changed": 34,
+   "class-changed | corrected-minor": 12,
+   "class-changed | kept": 8,
+   "class-changed | rejected": 1,
+   "correct | class-changed": 4,
+   "correct | corrected-minor": 254,
+   "correct | corrected-redrawn": 1,
+   "correct | kept": 179,
+   "redrawn | class-changed": 4,
+   "redrawn | corrected-minor": 196,
+   "redrawn | corrected-redrawn": 1,
+   "redrawn | kept": 3,
+   "redrawn | rejected": 1,
+   "rejected | class-changed": 44,
+   "rejected | corrected-minor": 180,
+   "rejected | corrected-redrawn": 14,
+   "rejected | kept": 5,
+   "rejected | rejected": 28
+  }
+ },
+ "gt_near_duplicates_iou070": {
+  "pairs": 4,
+  "gt_boxes_involved": 8,
+  "same_class_pairs": 3,
+  "fn_yolo_c1_050_that_are_dup_boxes": 5,
+  "fn_yolo_c1_050_total": 129,
+  "pairs_detail": [
+   {
+    "frame": "20240129143513:90",
+    "a": [
+     "car",
+     "kept"
+    ],
+    "b": [
+     "car",
+     "corrected"
+    ],
+    "iou": 0.869
+   },
+   {
+    "frame": "20240129150012:121",
+    "a": [
+     "truck",
+     "kept"
+    ],
+    "b": [
+     "truck",
+     "corrected"
+    ],
+    "iou": 0.976
+   },
+   {
+    "frame": "20240129155948:204",
+    "a": [
+     "truck",
+     "kept"
+    ],
+    "b": [
+     "truck",
+     "corrected"
+    ],
+    "iou": 0.913
+   },
+   {
+    "frame": "20240129181752:14",
+    "a": [
+     "truck",
+     "kept"
+    ],
+    "b": [
+     "car",
+     "kept"
+    ],
+    "iou": 0.945
+   }
+  ],
+  "note": "Gabarito não é alterado (política). Com matching one-to-one, a segunda caixa de um par só casa se houver duas propostas no mesmo objeto."
+ }
+}

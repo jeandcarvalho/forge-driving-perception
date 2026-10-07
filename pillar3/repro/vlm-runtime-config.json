@@ -1,0 +1,270 @@
+{
+ "_gerado_em": "2026-09-07",
+ "_fontes": {
+  "config": "C:\\Users\\REPRO_USER\\Documents\\carcara-forge\\src\\forge\\config.py",
+  "cliente": "C:\\Users\\REPRO_USER\\Documents\\carcara-forge\\src\\forge\\vlm\\client.py",
+  "preparo_de_imagem": "C:\\Users\\REPRO_USER\\Documents\\carcara-forge\\src\\forge\\vlm\\prepare.py",
+  "manifesto_ollama": "C:\\Users\\REPRO_USER\\.ollama\\models\\manifests\\registry.ollama.ai\\library\\qwen3-vl\\8b-instruct",
+  "runs": {
+   "v1_single": "D:\\carcara-data\\all-perception-in-one\\runs\\20260820T031131Z-vlm-audit",
+   "v2_decomposed": "D:\\carcara-data\\all-perception-in-one\\runs\\20260821T002801Z-vlm-audit",
+   "v3_single_classfix": "D:\\carcara-data\\all-perception-in-one\\runs\\20260907T164834Z-vlm-audit-v3-single-classfix"
+  }
+ },
+ "comum_aos_tres_bracos": {
+  "modelo": {
+   "nome_ollama": "qwen3-vl:8b-instruct",
+   "digest_da_tag_sha256": "0533d74300e4f9bc367d675d4e64ffd073d50ff16a2b4096cc2e8a1cf8c96319",
+   "familia": "qwen3vl",
+   "tamanho_declarado": "8.8B",
+   "quantizacao": "Q4_K_M",
+   "formato": "gguf",
+   "renderer_parser": [
+    "qwen3-vl-instruct",
+    "qwen3-vl-instruct"
+   ],
+   "peso_bytes": 6140392672,
+   "peso_digest_sha256": "1329cd5ab37e5ef6faef37cd8ff8660ffc96ed5b47b34fddf8eb0912e6c82466",
+   "licenca_do_modelo": "Apache-2.0 (blob de licenca dentro do proprio manifesto)",
+   "variante": "instruct (NAO thinking) - ver comentario em config.VLM_MODEL"
+  },
+  "runtime": {
+   "servidor": "Ollama",
+   "versao_cliente_medida_em_2026-09-07": "0.32.15",
+   "endpoint": "http://localhost:11434/api/chat",
+   "stream": false,
+   "timeout_s": 300.0,
+   "OLLAMA_NUM_PARALLEL": 1,
+   "paralelismo_no_cliente": "nenhum - chamadas sincronas em serie"
+  },
+  "amostragem": {
+   "temperature": 0.0,
+   "temperature_origem": "unico campo passado em options{} pelo cliente",
+   "top_p": 0.95,
+   "top_k": 20,
+   "top_p_top_k_origem": "parametros do Modelfile do modelo; o cliente NAO os sobrescreve",
+   "seed": null,
+   "seed_nota": "nenhuma seed e enviada. O determinismo vem de temperature=0 + gramatica, nao de semente fixada.",
+   "repeat_penalty": null,
+   "num_predict": null,
+   "num_ctx": null,
+   "nao_setados_nota": "campos ausentes de options{} usam o default do Ollama/Modelfile e NAO estao registrados no run.",
+   "decodificacao_restrita": "JSON schema no campo `format` do /api/chat (gramatica llama.cpp)"
+  },
+  "imagens": {
+   "quantas_por_chamada": 2,
+   "imagem_1": "frame inteiro 1920x1080 com a caixa proposta desenhada (contorno preto 5px + rosa 3px + rotulo)",
+   "imagem_2": "recorte ao redor da caixa, com a caixa tambem desenhada dentro do recorte",
+   "resolucao_nativa": [
+    1920,
+    1080
+   ],
+   "VLM_IMAGE_MAX_SIDE": 1920,
+   "redimensionamento": "nenhum no frame inteiro; o recorte so e ampliado se ficar menor que VLM_CROP_MIN_PX (LANCZOS)",
+   "VLM_CROP_PAD": 0.6,
+   "VLM_CROP_MIN_PX": 224,
+   "codificacao": "JPEG qualidade 92, base64, campo images[] do /api/chat",
+   "cor_da_caixa_rgb": [
+    255,
+    0,
+    128
+   ],
+   "proposta_desenhada_visualmente": true,
+   "coordenadas_tambem_em_texto": true,
+   "formato_das_coordenadas_no_texto": "normalizadas [x1,y1,x2,y2] com 3 casas, origem no canto superior esquerdo"
+  },
+  "granularidade": {
+   "uma_chamada_por": "PROPOSTA (caixa), nao por frame",
+   "propostas": 501,
+   "frames": 313,
+   "acquisitions": 127
+  },
+  "erro_e_retry": {
+   "no_cliente": "nenhum retry. HTTP error, conteudo vazio ou JSON invalido viram VlmError e contam em usage.failures.",
+   "no_v3": "o checkpoint reinfere linhas gravadas com erro em vez de herda-las; o phase1.json final tem 0 erros."
+  },
+  "hardware": {
+   "gpu": "NVIDIA GeForce RTX 5060 Ti, 16311 MiB",
+   "driver": "610.88",
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13600KF",
+   "ram_gb": 15.8,
+   "so": "Windows 11 Pro 10.0.26200",
+   "python": "3.11.9"
+  }
+ },
+ "diferencas_entre_bracos": {
+  "v1_single": {
+   "prompt_fn": "forge.vlm.phases.phase1_prompt",
+   "prompt_sha256_na_1a_caixa": "8295e3a865682eae6c17cdeea17ffb385e2b847dcb2b69fee5a557e0192edbb0",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "verdict": {
+      "type": "string",
+      "enum": [
+       "kept",
+       "corrected-minor",
+       "corrected-redrawn",
+       "class-changed",
+       "rejected"
+      ]
+     },
+     "correct_class": {
+      "type": "string",
+      "description": "Só quando verdict == class-changed: a classe certa."
+     },
+     "reason": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "verdict",
+     "reason"
+    ],
+    "additionalProperties": false
+   },
+   "schema_sha256": "ba932b9570dc4359c681fb10ed81646e2e06404ba1af1e9db1ebf270e4d7fa58",
+   "linhas_no_phase1_json": 505,
+   "pontuado_sobre": 501,
+   "usage": {
+    "calls": 505,
+    "failures": 0,
+    "prompt_tokens": 1742808,
+    "eval_tokens": 19355,
+    "seconds": 2125.3,
+    "seconds_per_call": 4.21
+   },
+   "run": "D:\\carcara-data\\all-perception-in-one\\runs\\20260820T031131Z-vlm-audit",
+   "git_commit": "292a5626a505327a345762b9e7f8c7106bd155a7"
+  },
+  "v3_single_classfix": {
+   "prompt_fn": "forge.vlm.phases.phase1_prompt (a MESMA da v1, reusada)",
+   "prompt_sha256_na_1a_caixa": "8295e3a865682eae6c17cdeea17ffb385e2b847dcb2b69fee5a557e0192edbb0",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "verdict": {
+      "type": "string",
+      "enum": [
+       "kept",
+       "corrected-minor",
+       "corrected-redrawn",
+       "class-changed",
+       "rejected"
+      ]
+     },
+     "correct_class": {
+      "type": "string",
+      "description": "Só quando verdict == class-changed: a classe certa.",
+      "enum": [
+       "person",
+       "bicycle",
+       "car",
+       "motorcycle",
+       "bus",
+       "truck"
+      ]
+     },
+     "reason": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "verdict",
+     "correct_class",
+     "reason"
+    ],
+    "additionalProperties": false
+   },
+   "schema_sha256": "78360f95bcf528e3ed1bc141165a2dee26b88609621383f225688ebb78035197",
+   "linhas_no_phase1_json": 501,
+   "pontuado_sobre": 501,
+   "usage": {
+    "calls": 50,
+    "failures": 0,
+    "prompt_tokens": 170681,
+    "eval_tokens": 2545,
+    "seconds": 209.1,
+    "seconds_per_call": 4.18
+   },
+   "usage_nota": "cobre so a ULTIMA das tres sessoes; o braco foi retomado por checkpoint.",
+   "run": "D:\\carcara-data\\all-perception-in-one\\runs\\20260907T164834Z-vlm-audit-v3-single-classfix",
+   "git_commit": null,
+   "diff_contra_v1": {
+    "texto_do_prompt": "identico byte a byte",
+    "schema.correct_class.enum": "ausente -> 6 classes",
+    "schema.required": "[verdict, reason] -> [verdict, correct_class, reason]"
+   }
+  },
+  "v2_decomposed": {
+   "prompt_fn": "forge.vlm.phases.phase1_prompt_v2",
+   "prompt_sha256_na_1a_caixa": "ad13f1913a8e46fdf9df1ce84dd39320dbb07f1510cd595dc7b8ee813fbc7d28",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "object_present": {
+      "type": "boolean",
+      "description": "Há mesmo um objeto das 6 classes dentro da caixa?"
+     },
+     "object_class": {
+      "type": "string",
+      "enum": [
+       "person",
+       "bicycle",
+       "car",
+       "motorcycle",
+       "bus",
+       "truck"
+      ]
+     },
+     "box_quality": {
+      "type": "string",
+      "enum": [
+       "tight",
+       "needs_nudge",
+       "badly_placed"
+      ]
+     },
+     "reason": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "object_present",
+     "object_class",
+     "box_quality",
+     "reason"
+    ],
+    "additionalProperties": false
+   },
+   "schema_sha256": "0eb1eb9349e9af761165e9aef4cb8da76629098e6ff6ca36aecd1cb716557d84",
+   "veredito_derivado_por": "forge.vlm.prepare.verdict_from_v2 (o schema nao tem campo verdict)",
+   "linhas_no_phase1_json": 501,
+   "pontuado_sobre": 501,
+   "usage": {
+    "calls": 501,
+    "failures": 0,
+    "prompt_tokens": 1738381,
+    "eval_tokens": 42558,
+    "seconds": 2442.4,
+    "seconds_per_call": 4.88
+   },
+   "run": "D:\\carcara-data\\all-perception-in-one\\runs\\20260821T002801Z-vlm-audit",
+   "git_commit": "292a5626a505327a345762b9e7f8c7106bd155a7"
+  }
+ },
+ "fase2_recall_contexto": {
+  "nao_e_braco_da_tabela": true,
+  "prompt_sha256": "f75e17879b9c6c983747989a5fe3dd5de2cef379af736622bc50a61f4e1f302c",
+  "schema_sha256": "5bde8152200546454fef240d67d9034ee68f77e323f61738ccf35b67af920689",
+  "VLM_RECALL_MAX_ITERS": 3,
+  "VLM_RECALL_MAX_ITEMS": 25,
+  "VLM_RECALL_DEDUP_IOU": 0.5,
+  "VLM_RECALL_PRESENCE_IOU": 0.3,
+  "run": "D:\\carcara-data\\all-perception-in-one\\runs\\20260820T173145Z-vlm-audit"
+ },
+ "determinismo_observado": {
+  "v1_x_v3_vereditos_identicos": "494/501 = 98,6% (pillar3-semantic-geometry.json)",
+  "nota": "v1 e v3 NAO sao repeticoes do mesmo experimento - o schema muda -, entao 98,6% e o limite superior observavel de repetibilidade, nao uma medida de determinismo. Nenhum braco foi reexecutado com a MESMA configuracao para medir determinismo puro."
+ }
+}

@@ -1,0 +1,253 @@
+196 files including this one
+├── configs/
+│   ├── ollama_server_config.json
+│   ├── qwen3-vl-8b-instruct_model_info.json
+│   ├── raw_yolo11x_313_config.json
+│   └── vlm_v2_969_experiment_meta.json
+├── docs/
+│   ├── RELEASE_NOTES.md
+│   └── SOURCE_MAP.csv
+├── pillar1/
+│   ├── results/
+│   │   ├── collection_density.json
+│   │   ├── pillar1-near-duplicate-formula.tex
+│   │   ├── pillar1-query.txt
+│   │   ├── pillar1-spacing-nearduplicate.json
+│   │   ├── pillar1_naive.json
+│   │   ├── tables3_naive.json
+│   │   └── tables_34.json
+│   ├── README.md
+│   ├── analyze_spacing_and_dup.py
+│   ├── decompose_spacing.py
+│   ├── measure_density.py
+│   ├── pillar1_content_arms.py
+│   ├── pillar1_naive.py
+│   ├── pillars.py
+│   ├── spacing_full.py
+│   ├── tables3_naive.py
+│   └── tables_34.py
+├── pillar2/
+│   ├── analysis/
+│   │   ├── RELATORIO-PILLAR23.md
+│   │   ├── compare_arms.py
+│   │   ├── pillar23-audit-reanalysis.csv
+│   │   ├── pillar23-audit-reanalysis.json
+│   │   ├── pillar23-sweep-repro.json
+│   │   ├── reanalysis.py
+│   │   └── sweep_repro.py
+│   ├── repro/
+│   │   └── raw_yolo11x_313/
+│   │       ├── vlm_v2_969/
+│   │       │   └── meta.json
+│   │       ├── P2P3-969-RESULTS.md
+│   │       ├── REPORT-RAW-YOLO11X-P2P3.md
+│   │       ├── SHA256SUMS.txt
+│   │       ├── analysis.json
+│   │       ├── analyze_raw_p2p3.py
+│   │       ├── config.json
+│   │       ├── p2p3_969_examples.json
+│   │       ├── p2p3_969_results.json
+│   │       ├── run_raw_yolo11x.py
+│   │       ├── run_vlm_v2_969.py
+│   │       ├── run_vlm_v2_969_batches.sh
+│   │       └── score_p2p3_969.py
+│   ├── README.md
+│   ├── ruler.py
+│   └── split_gt_by_acquisition.py
+├── pillar3/
+│   ├── analysis/
+│   │   ├── dump_prompts.py
+│   │   ├── pillar3-prompts.txt
+│   │   ├── pillar3-semantic-geometry.json
+│   │   ├── pillar3-single-classfix.json
+│   │   ├── semantic_geometry.py
+│   │   └── single_classfix.py
+│   ├── repro/
+│   │   ├── build_vlm_runtime_config.py
+│   │   ├── car-truck-breakdown.csv
+│   │   ├── car-truck-breakdown.json
+│   │   ├── car-truck-paper-table.tex
+│   │   ├── car_truck_breakdown.py
+│   │   ├── confidence-sweep.csv
+│   │   ├── pillar3-prompts-appendix.tex
+│   │   ├── vlm-paper-config.tex
+│   │   └── vlm-runtime-config.json
+│   ├── rtx3060_benchmark/
+│   │   ├── cases/
+│   │   │   ├── benchmark_cases.json
+│   │   │   └── request_fingerprints.json
+│   │   ├── expected/
+│   │   │   └── original_outputs_120.json
+│   │   ├── model_transfer/
+│   │   │   ├── manifests/
+│   │   │   │   └── registry.ollama.ai/
+│   │   │   │       └── library/
+│   │   │   │           └── qwen3-vl/
+│   │   │   │               └── 8b-instruct
+│   │   │   └── import_model.ps1
+│   │   ├── provenance/
+│   │   │   └── source_provenance.json
+│   │   ├── runtime/
+│   │   │   ├── experiment_meta.json
+│   │   │   ├── model_info.json
+│   │   │   ├── ollama_server_config.json
+│   │   │   ├── ollama_v0.32.15_sha256sum.txt
+│   │   │   ├── prompt.txt
+│   │   │   └── schema.json
+│   │   ├── source/
+│   │   │   └── forge/
+│   │   │       ├── api/
+│   │   │       │   ├── __init__.py
+│   │   │       │   └── models.py
+│   │   │       ├── core/
+│   │   │       │   ├── __init__.py
+│   │   │       │   ├── classes.py
+│   │   │       │   └── geometry.py
+│   │   │       ├── vlm/
+│   │   │       │   ├── __init__.py
+│   │   │       │   ├── client.py
+│   │   │       │   ├── phases.py
+│   │   │       │   ├── prepare.py
+│   │   │       │   └── report.py
+│   │   │       ├── __init__.py
+│   │   │       └── config.py
+│   │   ├── README.md
+│   │   ├── benchmark.py
+│   │   ├── p3common.py
+│   │   ├── prepare_replay.py
+│   │   ├── requirements.txt
+│   │   ├── start_ollama.ps1
+│   │   └── verify_environment.py
+│   └── README.md
+├── platform_reference/
+│   ├── apps/
+│   │   └── api/
+│   │       ├── prisma/
+│   │       │   └── schema.prisma
+│   │       ├── scripts/
+│   │       │   ├── out/
+│   │       │   │   └── pillar2/
+│   │       │   │       └── agreement-report.json
+│   │       │   ├── audit-curation.ts
+│   │       │   ├── pillar1-content-export.ts
+│   │       │   ├── pillar1-spacing-arms.ts
+│   │       │   ├── pillar2-agreement.ts
+│   │       │   ├── pillar2-create-round2.ts
+│   │       │   ├── pillar2-select.ts
+│   │       │   ├── repro-annotators-313.ts
+│   │       │   ├── repro-corpus-facts.ts
+│   │       │   ├── repro-corpus-facts2.ts
+│   │       │   ├── repro-frame-classes.ts
+│   │       │   ├── repro-pillar1-uiquery.ts
+│   │       │   ├── repro-provenance.ts
+│   │       │   └── repro-query-signature.ts
+│   │       └── src/
+│   │           ├── controllers/
+│   │           │   ├── collections/
+│   │           │   │   ├── curation/
+│   │           │   │   │   ├── action.ts
+│   │           │   │   │   ├── eligible.ts
+│   │           │   │   │   ├── frame.ts
+│   │           │   │   │   ├── generate.ts
+│   │           │   │   │   ├── select.ts
+│   │           │   │   │   ├── shared.ts
+│   │           │   │   │   └── stats.ts
+│   │           │   │   ├── add-by-query.ts
+│   │           │   │   ├── export-manifest.ts
+│   │           │   │   ├── get-collection-seconds-with-links.ts
+│   │           │   │   ├── spacing.ts
+│   │           │   │   ├── split.ts
+│   │           │   │   └── stats.ts
+│   │           │   └── dataset-sample.ts
+│   │           └── lib/
+│   │               ├── build-mongo-match.ts
+│   │               ├── geo.ts
+│   │               └── prisma.ts
+│   ├── historical/
+│   │   └── pillar1_content_fetch.py
+│   ├── packages/
+│   │   └── shared/
+│   │       └── src/
+│   │           ├── constants.ts
+│   │           ├── index.ts
+│   │           └── types.ts
+│   └── README.md
+├── prompts/
+│   ├── phase1_prompt_v2_rendered_example.txt
+│   ├── phase1_prompt_v2_template.txt
+│   ├── phase1_schema_v2.json
+│   └── pillar3-prompts-all-variants.txt
+├── reproduction/
+│   ├── README.md
+│   └── place_frozen_artifacts.py
+├── src/
+│   └── forge/
+│       ├── api/
+│       │   ├── __init__.py
+│       │   ├── client.py
+│       │   ├── manifest.py
+│       │   ├── models.py
+│       │   └── sample.py
+│       ├── core/
+│       │   ├── __init__.py
+│       │   ├── classes.py
+│       │   └── geometry.py
+│       ├── data/
+│       │   ├── writers/
+│       │   │   ├── __init__.py
+│       │   │   ├── coco.py
+│       │   │   ├── telemetry.py
+│       │   │   └── yolo.py
+│       │   ├── __init__.py
+│       │   ├── download.py
+│       │   ├── drive.py
+│       │   ├── layout.py
+│       │   ├── verify.py
+│       │   └── view.py
+│       ├── detect/
+│       │   ├── __init__.py
+│       │   ├── infer.py
+│       │   ├── label.py
+│       │   ├── source.py
+│       │   └── train.py
+│       ├── evaluate/
+│       │   ├── __init__.py
+│       │   ├── candidates.py
+│       │   ├── coco_map.py
+│       │   ├── diff.py
+│       │   ├── matcher.py
+│       │   └── parity.py
+│       ├── runs/
+│       │   ├── __init__.py
+│       │   └── registry.py
+│       ├── vlm/
+│       │   ├── __init__.py
+│       │   ├── client.py
+│       │   ├── curate.py
+│       │   ├── flow.py
+│       │   ├── phases.py
+│       │   ├── prepare.py
+│       │   ├── report.py
+│       │   └── score.py
+│       ├── __init__.py
+│       ├── __main__.py
+│       ├── cli.py
+│       └── config.py
+├── tests/
+│   ├── fixtures/
+│   │   ├── manifest_discarded_head.json
+│   │   ├── manifest_test_full.json
+│   │   └── manifest_train_head.json
+│   ├── conftest.py
+│   ├── test_eval.py
+│   ├── test_geometry.py
+│   ├── test_gt_and_writers.py
+│   ├── test_label_and_train.py
+│   └── test_parity.py
+├── .gitignore
+├── CITATION.cff
+├── LICENSE-TODO.md
+├── PUBLIC_RELEASE_CHANGES.md
+├── README.md
+├── pyproject.toml
+└── uv.lock

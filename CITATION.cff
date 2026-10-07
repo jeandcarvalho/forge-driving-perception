@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the article and the reproducibility artifacts."
+type: software
+title: "FORGE: On-Demand Dataset Curation and Model-Assisted Annotation for Driving Perception"
+abstract: "Research code and reproducibility resources associated with the FORGE paper: on-demand dataset curation (Pillar 1), detector-assisted annotation with YOLO11x (Pillar 2) and VLM-assisted proposal assessment with Qwen3-VL (Pillar 3). The CarCara platform and the original images are not distributed; frozen, sanitized artifacts are archived on Zenodo."
+version: 1.0.0
+authors:
+  - family-names: Carvalho
+    given-names: Jean Douglas
+  - family-names: de Lima
+    given-names: Jeferson José
+  - family-names: dos Santos
+    given-names: Glaucia Melo
+  - family-names: Santos
+    given-names: Max Mauro Dias
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23104407
+    description: "Reproducibility artifacts (Zenodo). The article has no DOI of its own yet."
+keywords:
+  - driving perception
+  - dataset curation
+  - model-assisted annotation
+  - YOLO11
+  - vision-language model
+  - reproducibility
+# date-released: TODO -- set at release (YYYY-MM-DD)
+# license: TODO -- see LICENSE-TODO.md
+# repository-code: https://github.com/jeandcarvalho/forge-driving-perception  (add once the repository is public)
+# ORCID: none verified in the project files, so none is listed.

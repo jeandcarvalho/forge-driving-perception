@@ -1,0 +1,59 @@
+[project]
+name = "carcara-forge"
+version = "0.1.0"
+description = "Materializa o dataset de percepção da plataforma CarCará e roda os experimentos do paper."
+requires-python = ">=3.11,<3.13"
+
+dependencies = [
+    "typer>=0.15",
+    "httpx>=0.28",
+    "pydantic>=2.10",
+    "tqdm>=4.67",
+    "pillow>=11.0",
+    "pyarrow>=19.0",
+    "numpy>=2.0",
+]
+
+[project.optional-dependencies]
+# Separado do núcleo: `pull`, `verify` e `audit` não precisam de torch, e torch em
+# cu128 é ~3 GB. Instale com `uv sync --extra ml` só quando for inferir/treinar.
+ml = [
+    "torch>=2.7",
+    "torchvision>=0.22",
+    "ultralytics>=8.3.0",
+    "pycocotools>=2.0.8",
+]
+
+[project.scripts]
+forge = "forge.cli:app"
+
+[dependency-groups]
+dev = ["pytest>=8.3", "ruff>=0.9"]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# torch precisa vir do índice cu128. A GPU alvo é uma RTX 5060 Ti (Blackwell,
+# sm_120): as wheels cu121/cu124 não trazem kernel para essa arquitetura e o
+# treino morre com "no kernel image is available for execution on the device".
+# ─────────────────────────────────────────────────────────────────────────────
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu128" }]
+torchvision = [{ index = "pytorch-cu128" }]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/forge"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

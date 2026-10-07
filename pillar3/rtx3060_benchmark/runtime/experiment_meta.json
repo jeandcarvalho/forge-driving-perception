@@ -1,0 +1,33 @@
+{
+ "arm": "YOLO11x raw (conf>=0.25, 6 GT classes) + VLM decomposed v2",
+ "frozen_set": "C:\\Users\\REPRO_USER\\Documents\\carcara-forge\\paper\\repro\\raw_yolo11x_313\\p2p3_frozen_969.json",
+ "frozen_set_sha256": "6b03b3238e50799481fc15e2a91b098136b5fa43fd73648970688dfb5dc9321d",
+ "proposals": 969,
+ "rows_with_verdict": 969,
+ "rows_with_error": 0,
+ "model": "qwen3-vl:8b-instruct",
+ "model_digest": "0533d74300e4f9bc367d675d4e64ffd073d50ff16a2b4096cc2e8a1cf8c96319",
+ "ollama_version": "0.32.15",
+ "temperature": 0.0,
+ "schema": "PHASE1_SCHEMA_V2",
+ "schema_sha256": "8d27ceeb54cfbd20476d8a9125dcdc9389a7620397031de92e2e8a976d11523d",
+ "prompt_fn": "forge.vlm.phases.phase1_prompt_v2 (unchanged)",
+ "first_prompt_sha256": "ada203773c339aab860d224e2c5815f9bc601f68bf8a6995d00b07060b2a66d8",
+ "render": "forge.vlm.prepare.draw_box + crop_around (unchanged)",
+ "python": "3.11.9",
+ "forge_git_commit": "292a5626a505327a345762b9e7f8c7106bd155a7",
+ "sessions": [
+  {
+   "finished_at": "2026-09-10T16:16:32.401123+00:00",
+   "calls_this_session": 470,
+   "usage": {
+    "calls": 470,
+    "failures": 0,
+    "prompt_tokens": 1618059,
+    "eval_tokens": 40539,
+    "seconds": 2121.7,
+    "seconds_per_call": 4.51
+   }
+  }
+ ]
+}

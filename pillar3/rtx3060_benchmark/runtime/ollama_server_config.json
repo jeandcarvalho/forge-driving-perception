@@ -1,0 +1,35 @@
+{
+ "_what": "Configuração do servidor a reproduzir, com o nível de evidência de cada item. REGISTRADO = está num artefato do run de 969; INFERIDO = deduzido de outro artefato; MEDIDO_DEPOIS = observado no benchmark de 2026-10-01 no PC original (mesmo binário, mesmo modelo, mesmo código).",
+ "ollama_version": {"value": "0.32.15", "evidence": "REGISTRADO", "source": "runtime/experiment_meta.json ollama_version (gravado via GET /api/version no início da sessão)"},
+ "model_tag": {"value": "qwen3-vl:8b-instruct", "evidence": "REGISTRADO", "source": "experiment_meta.json model"},
+ "model_digest": {"value": "0533d74300e4f9bc367d675d4e64ffd073d50ff16a2b4096cc2e8a1cf8c96319", "evidence": "REGISTRADO", "source": "experiment_meta.json model_digest (GET /api/tags); = sha256 do manifesto"},
+ "quantization": {"value": "Q4_K_M (GGUF)", "evidence": "REGISTRADO no manifesto do modelo", "source": "runtime/model_info.json (config blob file_type)"},
+ "temperature": {"value": 0.0, "evidence": "REGISTRADO", "source": "experiment_meta.json temperature; único campo de options{} enviado pelo VlmClient"},
+ "top_p": {"value": 0.95, "evidence": "REGISTRADO no Modelfile do modelo (params blob); o cliente não sobrescreve", "source": "runtime/model_info.json modelfile_params_blob"},
+ "top_k": {"value": 20, "evidence": "REGISTRADO no Modelfile do modelo (params blob); o cliente não sobrescreve", "source": "runtime/model_info.json modelfile_params_blob"},
+ "modelfile_temperature": {"value": 1, "note": "o Modelfile diz temperature 1, mas o cliente envia options.temperature=0.0 em toda chamada, que prevalece"},
+ "seed": {"value": null, "note": "nenhuma seed enviada; o determinismo vem de temperature 0 + gramática"},
+ "json_schema": {"value": "runtime/schema.json (PHASE1_SCHEMA_V2)", "evidence": "REGISTRADO", "source": "experiment_meta.json schema_sha256 8d27ceeb... = sha256(json.dumps(schema, sort_keys=True)); conferido contra o código copiado"},
+ "LLAMA_ARG_CACHE_RAM": {"value": "0", "evidence": "REGISTRADO em documento do run, não no meta.json", "source": "paper/repro/raw_yolo11x_313/P2P3-969-RESULTS.md e run_vlm_v2_969_batches.sh (provenance/original_scripts/). As 499 primeiras caixas do run saíram com o cache LIGADO (padrão), as 470 últimas com 0; 78/78 vereditos idênticos entre as duas configurações. O benchmark usa 0, como a sessão final e como o benchmark de 2026-10-01."},
+ "OLLAMA_NUM_PARALLEL / slots": {"value": 1, "evidence": "INFERIDO + MEDIDO_DEPOIS", "source": "padrão do Ollama 0.32.15 (nenhuma variável OLLAMA_* definida no PC original); log de 2026-10-01: n_slots = 1, -np 1; cliente síncrono em série"},
+ "context_length": {"value": 4096, "evidence": "MEDIDO_DEPOIS (não registrado no run)", "source": "log de 2026-10-01: llama-server -c 4096, n_ctx = 4096; /api/ps context_length 4096. O cliente não envia num_ctx; OLLAMA_CONTEXT_LENGTH não estava definido (0 = automático). Prompt ≈ 3.417–3.957 tokens < 4096."},
+ "gpu_offload": {"value": "37/37 camadas na GPU; /api/ps size == size_vram", "evidence": "MEDIDO_DEPOIS", "source": "reference/ollama_serve_RTX5060Ti_2026-10-01.log"},
+ "flash_attention": {"value": "OLLAMA_FLASH_ATTENTION não definido → llama-server flash_attn=auto → 'Flash Attention enabled' na RTX 5060 Ti", "evidence": "MEDIDO_DEPOIS", "note": "Em outra GPU o 'auto' pode resolver diferente: o benchmark REGISTRA o estado efetivo, não força."},
+ "kv_cache_type": {"value": "f16 (padrão)", "evidence": "MEDIDO_DEPOIS"},
+ "backend": {"value": "CUDA (no PC original: libdirs=ollama,cuda_v13, driver CUDA 13.3)", "evidence": "MEDIDO_DEPOIS"},
+ "mmap": {"value": "desligado pelo Ollama no Windows+CUDA (reason=windows_cuda)", "evidence": "MEDIDO_DEPOIS"},
+ "images": {"value": "2 por chamada: frame 1920x1080 com a caixa desenhada + recorte (VLM_CROP_PAD 0.6, mínimo 224 px, LANCZOS se ampliar); JPEG q=92, base64", "evidence": "CÓDIGO", "source": "source/forge/vlm/prepare.py, client.py, config.py; conferido por cases/request_fingerprints.json"},
+ "server_launch_original": "ollama.exe serve com LLAMA_ARG_CACHE_RAM=0, iniciado por Start-Process (run_vlm_v2_969_batches.sh). O log do servidor da sessão original NÃO foi salvo.",
+ "ollama_binaries_on_original_pc": {
+  "installed_by": "OllamaSetup.exe (auto-update de 2026-08-22, upgrade.log)",
+  "ollama.exe_sha256": "0a9d42eabc59fdafde8d2d3e7964f6050b31a17b3e3795bfacb367c12df790f4",
+  "lib/ollama/llama-server.exe_sha256": "efbbc54ceb300aef0f9be8f41f387b74f636e2c92d4723252c912f61147bdcd6",
+  "note": "informativo: o zip oficial deve conter os mesmos binários, mas isso não foi verificado"
+ },
+ "official_release_v0.32.15": {
+  "page": "https://github.com/ollama/ollama/releases/tag/v0.32.15",
+  "ollama-windows-amd64.zip": {"url": "https://github.com/ollama/ollama/releases/download/v0.32.15/ollama-windows-amd64.zip", "bytes": 1460302386, "sha256": "a1d11d46a944f9c7521f5e9a3a5db51cd3365401da627d96c204698fc6914ff9"},
+  "OllamaSetup.exe": {"url": "https://github.com/ollama/ollama/releases/download/v0.32.15/OllamaSetup.exe", "sha256": "bb49a9366dacf07e3fc94e87869d1a0ad5df3a8cbd9ee54503d4b6b1c0843cb0", "note": "instala o app de bandeja que se AUTO-ATUALIZA — evite"},
+  "sha256sum.txt": "runtime/ollama_v0.32.15_sha256sum.txt (baixado do release em 2026-10-01)"
+ }
+}

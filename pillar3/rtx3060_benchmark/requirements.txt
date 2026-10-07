@@ -1,0 +1,24 @@
+# Dependências do bundle, pinadas nas MESMAS versões do venv do carcara-forge que
+# executou o run de 969 (dist-info datados de 2026-08-15, anteriores ao run de 2026-09-10).
+# Python 3.11.9 (64-bit).
+#
+# Diretas:
+#   pillow   — abrir JPEG, desenhar a caixa, recortar, LANCZOS, re-encode JPEG q=92
+#   httpx    — POST /api/chat (a serialização JSON do corpo vem do httpx)
+#   pydantic — importado por forge/api/models.py, que prepare.py e phases.py importam.
+#              Mantido para não editar o código científico copiado byte a byte.
+# As demais são transitivas, pinadas para o ambiente ficar idêntico.
+#
+# Instale só com wheels:  python -m pip install --only-binary=:all: -r requirements.txt
+pillow==12.3.0
+httpx==0.28.1
+httpcore==1.0.9
+h11==0.16.0
+anyio==4.14.2
+idna==3.18
+certifi==2026.7.22
+typing-extensions==4.16.0
+pydantic==2.13.4
+pydantic-core==2.46.4
+annotated-types==0.8.0
+typing-inspection==0.4.4

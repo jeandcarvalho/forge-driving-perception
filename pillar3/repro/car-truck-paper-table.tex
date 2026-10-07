@@ -1,0 +1,120 @@
+% =====================================================================
+% Car vs Truck - resultados por classe nas 4 configuracoes
+% Fonte: paper/repro/car-truck-breakdown.json (== paper/pillar23/pillar3-single-classfix.json)
+% Gerado em 2026-09-07. Valores EXATOS, nao arredondados aqui.
+%
+% Definicao de "correct" (identica nas 4 linhas, sem IoU contra o gabarito):
+%   a caixa sobrevive ao estagio de curadoria E
+%   (veredito humano in {kept, corrected-minor} com o rotulo preservado)
+%   OU (veredito humano == class-changed e o rotulo final == o que o humano pos).
+%   O vinculo proposta<->gabarito e a identidade ref_det_id, nao sobreposicao.
+%
+% Denominadores (conferidos):
+%   car   : GT 427 = 133 never proposed + 294 with a proposal ; 304 proposals
+%   truck : GT 255 =  93 never proposed + 162 with a proposal ; 149 proposals
+%   coverage         = correct / GT da classe
+%   reachable recov. = correct / GT da classe que TINHA proposta
+%   not recovered    = GT da classe - correct
+% =====================================================================
+
+% ---------------------------------------------------------------------
+% TABELA COMPACTA (recomendada para o corpo do paper)
+% ---------------------------------------------------------------------
+\begin{table}[t]
+\centering
+\caption{Per-class outcome of each curation stage on the 313-frame reference
+set. \emph{Boxes} is how many detector proposals survive the stage;
+\emph{correct} follows the verdict-based definition (no IoU matching against the
+reference; proposals are linked to reviewer actions by identity). Coverage is
+over all reference instances of the class; reachable recovery is over the
+instances the detector actually proposed. Class-correction counts are
+attempted/correct/incorrect.}
+\label{tab:cartruck}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llrrrrrrr}
+\toprule
+Class & Stage & Boxes & Corr. & Inc. & Not rec. & Prec. & Cov. & Reach. \\
+\midrule
+\multirow{4}{*}{\shortstack[l]{Car\\\scriptsize GT 427\\\scriptsize 294 proposed}}
+ & YOLO11x (no VLM)          & 304 & 208 & 96 & 219 & 68.4 & 48.7 & 70.7 \\
+ & VLM single (v1)           & 255 & 192 & 63 & 235 & 75.3 & 45.0 & 65.3 \\
+ & VLM single + class (v3)   & 255 & 192 & 63 & 235 & 75.3 & 45.0 & 65.3 \\
+ & VLM decomposed (v2)       & 283 & \textbf{217} & 66 & 210 & \textbf{76.7} & \textbf{50.8} & \textbf{73.8} \\
+\midrule
+\multirow{4}{*}{\shortstack[l]{Truck\\\scriptsize GT 255\\\scriptsize 162 proposed}}
+ & YOLO11x (no VLM)          & 149 & 107 & 42 & 148 & 71.8 & 42.0 & 66.0 \\
+ & VLM single (v1)           & 139 & 107 & 32 & 148 & 77.0 & 42.0 & 66.0 \\
+ & VLM single + class (v3)   & 139 & 110 & 29 & 145 & 79.1 & 43.1 & 67.9 \\
+ & VLM decomposed (v2)       & 142 & \textbf{118} & 24 & 137 & \textbf{83.1} & \textbf{46.3} & \textbf{72.8} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ---------------------------------------------------------------------
+% TABELA COMPLETA (com correcao de classe; para o appendix)
+% ---------------------------------------------------------------------
+\begin{table}[t]
+\centering
+\caption{Per-class outcome with class-correction accounting. Denominators:
+car, 427 reference instances of which 294 received a detector proposal and 133
+were drawn by hand; truck, 255 of which 162 received a proposal and 93 were
+drawn by hand. The detector emitted 304 car and 149 truck proposals. Rows are
+indexed by the class the \emph{detector} proposed, so a class correction moves
+the credit to the proposed-class row, not the reference-class row.}
+\label{tab:cartruck-full}
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{llrrrrrrrrrr}
+\toprule
+ & & \multicolumn{4}{c}{Counts} & \multicolumn{3}{c}{Rates (\%)} & \multicolumn{3}{c}{Class corrections} \\
+\cmidrule(lr){3-6}\cmidrule(lr){7-9}\cmidrule(lr){10-12}
+Class & Stage & Boxes & Corr. & Inc. & Not rec. & Prec. & Cov. & Reach. & Att. & OK & Bad \\
+\midrule
+\multirow{4}{*}{Car}
+ & YOLO11x                 & 304 & 208 & 96 & 219 & 68.4 & 48.7 & 70.7 &  0 & 0 & 0 \\
+ & VLM single (v1)         & 255 & 192 & 63 & 235 & 75.3 & 45.0 & 65.3 &  1 & 0 & 1 \\
+ & VLM single + class (v3) & 255 & 192 & 63 & 235 & 75.3 & 45.0 & 65.3 &  1 & 1 & 0 \\
+ & VLM decomposed (v2)     & 283 & 217 & 66 & 210 & 76.7 & 50.8 & 73.8 & 11 & 9 & 0 \\
+\midrule
+\multirow{4}{*}{Truck}
+ & YOLO11x                 & 149 & 107 & 42 & 148 & 71.8 & 42.0 & 66.0 &  0 & 0 & 0 \\
+ & VLM single (v1)         & 139 & 107 & 32 & 148 & 77.0 & 42.0 & 66.0 &  5 & 0 & 4 \\
+ & VLM single + class (v3) & 139 & 110 & 29 & 145 & 79.1 & 43.1 & 67.9 &  5 & 4 & 1 \\
+ & VLM decomposed (v2)     & 142 & 118 & 24 & 137 & 83.1 & 46.3 & 72.8 & 15 &12 & 1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ---------------------------------------------------------------------
+% NOTA DE RODAPE (usar uma das duas)
+% ---------------------------------------------------------------------
+% \footnote{Rows are indexed by the class the detector proposed. Because a class
+% correction moves the credit to the proposed-class row rather than to the
+% reference-class row, per-class coverage is only interpretable where the two
+% partitions nearly coincide, which holds for car and truck. The remaining
+% classes (bus 23, motorcycle 13, person 10, bicycle 3 reference instances) are
+% too small to support a per-class claim and are omitted.}
+
+% \footnote{Attempted class corrections need not equal correct plus incorrect:
+% a correction issued on a proposal whose reviewer verdict was a geometry
+% redraw is counted as attempted but is neither credited nor charged.}
+
+% ---------------------------------------------------------------------
+% RECONCILIACAO COM A TABELA PRINCIPAL (conferido em 2026-09-07)
+% Somar as linhas por classe e comparar com a tabela principal NAO bate,
+% e a diferenca e conhecida e inteira:
+%
+%   caixas retidas    base: 499 por classe  vs  501 na principal  (-2)
+%                       v2: 467 por classe  vs  468 na principal  (-1)
+%   correcoes classe    v2:  53 tentadas /  42 certas por classe
+%                            54 tentadas /  43 certas na principal (-1 / -1)
+%
+% Causa unica: o recorte por classe so emite linha para classe que EXISTE no
+% gabarito, e duas das 501 propostas tem classe que o gabarito nao tem --
+% uma `fork` (o humano rejeitou; sai do v2 tambem) e uma `fire hydrant`
+% (o humano trocou para motorcycle e o v2 acertou a troca -- e essa a 54a
+% correcao tentada e a 43a certa da tabela principal).
+% Nenhuma das duas e car nem truck: as linhas de car e de truck fecham
+% EXATAMENTE com a tabela principal, e os numeros acima nao as tocam.
+% Fonte: car-truck-breakdown.json + phase1.json do run do v2.

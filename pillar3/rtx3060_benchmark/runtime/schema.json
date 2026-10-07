@@ -1,0 +1,38 @@
+{
+ "type": "object",
+ "properties": {
+  "object_present": {
+   "type": "boolean",
+   "description": "Há mesmo um objeto das 6 classes dentro da caixa?"
+  },
+  "object_class": {
+   "type": "string",
+   "enum": [
+    "person",
+    "bicycle",
+    "car",
+    "motorcycle",
+    "bus",
+    "truck"
+   ]
+  },
+  "box_quality": {
+   "type": "string",
+   "enum": [
+    "tight",
+    "needs_nudge",
+    "badly_placed"
+   ]
+  },
+  "reason": {
+   "type": "string"
+  }
+ },
+ "required": [
+  "object_present",
+  "object_class",
+  "box_quality",
+  "reason"
+ ],
+ "additionalProperties": false
+}

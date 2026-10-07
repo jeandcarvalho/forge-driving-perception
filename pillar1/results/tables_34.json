@@ -1,0 +1,60 @@
+{
+  "table3": [
+    {
+      "label": "colecao",
+      "frames": 4364,
+      "objects": 27479,
+      "empty": 19
+    },
+    {
+      "label": "aleatorio random-n4364-s42",
+      "frames": 4364,
+      "objects": 17048,
+      "empty": 926
+    },
+    {
+      "label": "aleatorio random-n4364-s42-acqsall",
+      "frames": 4364,
+      "objects": 9469,
+      "empty": 1225
+    }
+  ],
+  "table4": [
+    {
+      "label": "colecao",
+      "frames": 4364,
+      "acqs": 171,
+      "min": 5.575057691850949,
+      "p05": 30.36140423381666,
+      "median": 36.720896952620876,
+      "lt10_n": 4,
+      "lt10_pct": 0.09174311926605505,
+      "lt25_n": 8,
+      "lt25_pct": 0.1834862385321101
+    },
+    {
+      "label": "aleatorio random-n4364-s42",
+      "frames": 4363,
+      "acqs": 149,
+      "min": 0.0,
+      "p05": 0.0,
+      "median": 38.50272924215789,
+      "lt10_n": 1034,
+      "lt10_pct": 23.710158220591605,
+      "lt25_n": 1766,
+      "lt25_pct": 40.49529924329282
+    },
+    {
+      "label": "aleatorio random-n4364-s42-acqsall",
+      "frames": 4361,
+      "acqs": 106,
+      "min": 0.0,
+      "p05": 0.0,
+      "median": 39.86014950374663,
+      "lt10_n": 677,
+      "lt10_pct": 15.534648921523637,
+      "lt25_n": 1523,
+      "lt25_pct": 34.947223497016985
+    }
+  ]
+}

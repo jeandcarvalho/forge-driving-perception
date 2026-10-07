@@ -1,0 +1,36 @@
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+.env
+# private data and run outputs live outside the repo (see $FORGE_DATA_ROOT)
+/data/
+/runs/
+/out/
+# never commit weights, images or local archives
+*.pt
+*.pth
+*.gguf
+*.jpg
+*.jpeg
+*.png
+*.zip
+*.rar
+*.bak
+node_modules/
+
+# heavy frozen artifacts live in the Zenodo record; reproduction/place_frozen_artifacts.py copies
+# them back here for local runs -- never version them
+/pillar2/repro/raw_yolo11x_313/raw_predictions_tail.json
+/pillar2/repro/raw_yolo11x_313/predictions_coco_tail.json
+/pillar2/repro/raw_yolo11x_313/manifest.json
+/pillar2/repro/raw_yolo11x_313/manifest.csv
+/pillar2/repro/raw_yolo11x_313/manifest_conf020_sensitivity.*
+/pillar2/repro/raw_yolo11x_313/p2p3_frozen_969.json
+/pillar2/repro/raw_yolo11x_313/vlm_v2_969/phase1.json
+/pillar2/repro/raw_yolo11x_313/vlm_v2_969/phase1.jsonl
+# an unpacked Zenodo package, if someone puts it inside the repo
+/ZENODO_FORGE_*/
+/reproduction/zenodo_package/

@@ -1,0 +1,236 @@
+% =====================================================================
+% Appendix - prompts e output schemas dos tres bracos de VLM
+% Fonte verbatim: paper/pillar23/pillar3-prompts.txt (gerado por dump_prompts.py)
+% Validado contra os runs reais e contra forge.vlm.phases / forge.vlm.prepare
+% Hashes recalculados em 2026-09-07 importando as funcoes de producao.
+%
+% Requer no preambulo:
+%   \usepackage{listings}
+%   \lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,
+%           columns=flexible,frame=single,xleftmargin=0pt}
+% =====================================================================
+
+\section{VLM prompts and output schemas}
+\label{app:prompts}
+
+All three arms judge the same 501 detector proposals over the same 313 reference
+frames with the same model, temperature and images. The text below is verbatim;
+the placeholders in braces are the only per-proposal substitution. Rendered on
+the first proposal of the set (\texttt{20240103201734:4:0}, proposed class
+\texttt{person}, detector confidence 0.7559), the prompts hash to:
+
+\begin{center}
+\scriptsize
+\begin{tabular}{ll}
+\toprule
+Prompt & SHA-256 \\
+\midrule
+Single verdict (v1 \emph{and} v3) & \texttt{8295e3a865682eae6c17cdeea17ffb385e2b847dcb2b69fee5a557e0192edbb0} \\
+Decomposed (v2)                   & \texttt{ad13f1913a8e46fdf9df1ce84dd39320dbb07f1510cd595dc7b8ee813fbc7d28} \\
+\midrule
+Schema & SHA-256 (canonical JSON, sorted keys) \\
+\midrule
+v1 & \texttt{ba932b9570dc4359c681fb10ed81646e2e06404ba1af1e9db1ebf270e4d7fa58} \\
+v3 & \texttt{78360f95bcf528e3ed1bc141165a2dee26b88609621383f225688ebb78035197} \\
+v2 & \texttt{0eb1eb9349e9af761165e9aef4cb8da76629098e6ff6ca36aecd1cb716557d84} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+Arms v1 and v3 do not merely share prompt text: they call the same function, so
+the two prompts are byte-for-byte identical by construction. The SHA-256 over
+the concatenation of all 501 rendered single-verdict prompts is
+\texttt{b947fef992c369ca3941bc6d46cd3b960e2c1b79ac125de71ceb42feabc57672}.
+\textbf{The v1$\to$v3 contrast is therefore a pure schema intervention.}
+
+% ---------------------------------------------------------------------
+\subsection{Arm v1 --- single verdict}
+
+\begin{lstlisting}
+You are auditing an automatic object detector's output, exactly as a human annotator would. A detector proposed ONE box. Judge only that box.
+
+You get two images: the full driving scene with the proposed box outlined in pink, and a zoomed crop around the same box.
+
+Choose exactly one verdict:
+
+- "kept": the class is right AND the box is tight around the object. No change needed.
+- "corrected-minor": the class is right and the box is on the right object, but the edges need a small nudge (slightly loose, slightly cropped).
+- "corrected-redrawn": the class is right and the object is there, but the box is badly placed or badly sized - it would have to be drawn again from scratch.
+- "class-changed": there IS an object there and the box is reasonable, but the label is wrong (e.g. a truck labelled as a car). Give the correct class.
+- "rejected": there is no such object there at all - the detector fired on background, a reflection, a shadow, or a duplicate of another box.
+
+Be decisive. "kept" is a real answer and is common: if the box looks right, say kept rather than hedging toward a correction.
+
+Proposed class: {proposed_class}
+Detector confidence: {conf:.2f}
+Proposed box (normalized x1,y1,x2,y2): [{x1:.3f}, {y1:.3f}, {x2:.3f}, {y2:.3f}]
+
+Give your verdict and a one-sentence reason.
+\end{lstlisting}
+
+\noindent\textbf{Note.} The em dashes in items three and five are U+2014 in the
+source; they are rendered as hyphens above for typesetting only.
+
+\begin{lstlisting}[language=,caption={Output schema, arm v1}]
+{
+  "type": "object",
+  "properties": {
+    "verdict": {
+      "type": "string",
+      "enum": ["kept", "corrected-minor", "corrected-redrawn",
+               "class-changed", "rejected"]
+    },
+    "correct_class": {
+      "type": "string",
+      "description": "Only when verdict == class-changed: the right class."
+    },
+    "reason": { "type": "string" }
+  },
+  "required": ["verdict", "reason"],
+  "additionalProperties": false
+}
+\end{lstlisting}
+
+\noindent
+In v1, \texttt{correct\_class} is a free-form string and is \emph{absent from}
+\texttt{required}. Under constrained decoding the field is therefore optional
+and unconstrained, and the model omitted it on all seven occasions it answered
+\texttt{class-changed}: the scorer fell back to the original label and credited
+zero corrections.
+
+% ---------------------------------------------------------------------
+\subsection{Arm v3 --- single verdict with class correction}
+
+\textbf{The prompt text is byte-for-byte identical to arm v1.} The schema is the
+only difference:
+
+\begin{lstlisting}[language=,caption={Output schema, arm v3}]
+{
+  "type": "object",
+  "properties": {
+    "verdict": {
+      "type": "string",
+      "enum": ["kept", "corrected-minor", "corrected-redrawn",
+               "class-changed", "rejected"]
+    },
+    "correct_class": {
+      "type": "string",
+      "enum": ["person", "bicycle", "car", "motorcycle", "bus", "truck"],
+      "description": "Only when verdict == class-changed: the right class."
+    },
+    "reason": { "type": "string" }
+  },
+  "required": ["verdict", "correct_class", "reason"],
+  "additionalProperties": false
+}
+\end{lstlisting}
+
+\noindent
+Exhaustive diff v1 $\to$ v3:
+
+\begin{center}
+\small
+\begin{tabular}{lll}
+\toprule
+Field & v1 & v3 \\
+\midrule
+\texttt{properties.correct\_class.enum} & absent & the six classes \\
+\texttt{required} & \texttt{[verdict, reason]} & \texttt{[verdict, correct\_class, reason]} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+Nothing else changes: same five-verdict enum, same property order, same
+\texttt{additionalProperties}, same images, same model, same temperature.
+
+% ---------------------------------------------------------------------
+\subsection{Arm v2 --- decomposed}
+
+\begin{lstlisting}
+You are auditing an automatic object detector, exactly as a human annotator would. A detector proposed ONE box, outlined in pink. You get the full driving scene and a zoomed crop of the same box.
+
+Answer three things, in this order:
+
+1. object_present - Is there really an object of one of these classes inside the outlined box?
+   person, bicycle, car, motorcycle, bus, truck
+   Answer false ONLY if there is no such object there at all: the detector fired on background, road surface, a reflection, glare, or a shadow.
+   If a vehicle IS there, answer true - even if the box is a poor fit. A badly drawn box around a real object is still a real object; you will say so in the next field.
+
+2. object_class - Which of those classes it actually is. Answer this whenever object_present is true. If the detector's guess is right, repeat it; if it is wrong, give the right one.
+
+3. box_quality - How well the box fits that object:
+   - tight        : the box hugs the object. No change needed.
+   - needs_nudge  : right object, but the edges are slightly loose or slightly cropped.
+   - badly_placed : right object, but the box is badly sized or badly positioned and would have to be drawn again.
+
+Be decisive. "tight" is a real answer and is common.
+
+Detector guess: {proposed_class} (confidence {conf:.2f})
+Proposed box (normalized x1,y1,x2,y2): [{x1:.3f}, {y1:.3f}, {x2:.3f}, {y2:.3f}]
+\end{lstlisting}
+
+\begin{lstlisting}[language=,caption={Output schema, arm v2}]
+{
+  "type": "object",
+  "properties": {
+    "object_present": {
+      "type": "boolean",
+      "description": "Is there really an object of the six classes in the box?"
+    },
+    "object_class": {
+      "type": "string",
+      "enum": ["person", "bicycle", "car", "motorcycle", "bus", "truck"]
+    },
+    "box_quality": {
+      "type": "string",
+      "enum": ["tight", "needs_nudge", "badly_placed"]
+    },
+    "reason": { "type": "string" }
+  },
+  "required": ["object_present", "object_class", "box_quality", "reason"],
+  "additionalProperties": false
+}
+\end{lstlisting}
+
+\noindent
+The v2 schema has \emph{no} \texttt{verdict} field. The five-category verdict is
+derived in code, with class taking precedence over geometry, matching the
+precedence used by the human-verdict accounting:
+
+\begin{lstlisting}[language=,caption={Verdict derivation for arm v2}]
+if not object_present:            verdict = rejected
+elif object_class != proposed:    verdict = class-changed
+elif box_quality == needs_nudge:  verdict = corrected-minor
+elif box_quality == badly_placed: verdict = corrected-redrawn
+else:                             verdict = kept
+\end{lstlisting}
+
+\noindent
+Because the constrained decoder builds its grammar in the declared property
+order and every property is required, the ordering of the three questions is
+enforced by the decoder rather than requested in prose.
+
+% ---------------------------------------------------------------------
+\subsection{Enumerations used}
+
+\begin{center}
+\small
+\begin{tabular}{lll}
+\toprule
+Enum & Arms & Values \\
+\midrule
+\texttt{verdict} & v1, v3 & kept, corrected-minor, corrected-redrawn, class-changed, rejected \\
+\texttt{correct\_class} & v3 only & person, bicycle, car, motorcycle, bus, truck \\
+\texttt{object\_class} & v2 & person, bicycle, car, motorcycle, bus, truck \\
+\texttt{box\_quality} & v2 & tight, needs\_nudge, badly\_placed \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+\texttt{box\_quality} exists only in v2. In v1 and v3 the same information is
+folded into the single \texttt{verdict} enum, where the intermediate category
+\texttt{corrected-minor} was never selected --- zero times in either arm, out of
+501 proposals each.

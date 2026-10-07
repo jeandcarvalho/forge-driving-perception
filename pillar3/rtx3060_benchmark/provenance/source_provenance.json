@@ -1,0 +1,74 @@
+[
+ {
+  "file": "source/forge/__init__.py",
+  "original": "carcara-forge/src/forge/__init__.py",
+  "sha256": "91447944015cec709e8aa7655f7e9d64e1e4508e7023a57fe3746911c0fc6fed",
+  "mtime_original": "2026-08-15T20:05:28"
+ },
+ {
+  "file": "source/forge/config.py",
+  "original": "carcara-forge/src/forge/config.py",
+  "sha256": "c9396385fc02707561b8bf5f30189d078bfeefb85cc749bd7496adb60e9981ca",
+  "mtime_original": "2026-08-22T14:04:54"
+ },
+ {
+  "file": "source/forge/core/__init__.py",
+  "original": "carcara-forge/src/forge/core/__init__.py",
+  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "mtime_original": "2026-08-15T19:59:31"
+ },
+ {
+  "file": "source/forge/core/classes.py",
+  "original": "carcara-forge/src/forge/core/classes.py",
+  "sha256": "0977fcf20bdbb2bd361ed995ed5ffd3240889675ffb4766ca211f68f3dd2ec24",
+  "mtime_original": "2026-08-15T19:56:53"
+ },
+ {
+  "file": "source/forge/core/geometry.py",
+  "original": "carcara-forge/src/forge/core/geometry.py",
+  "sha256": "4c2ddabee192e4be6704e7dba162737414fca75599cb39fe143206716c81efd5",
+  "mtime_original": "2026-08-15T20:09:28"
+ },
+ {
+  "file": "source/forge/api/__init__.py",
+  "original": "carcara-forge/src/forge/api/__init__.py",
+  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "mtime_original": "2026-08-15T19:59:31"
+ },
+ {
+  "file": "source/forge/api/models.py",
+  "original": "carcara-forge/src/forge/api/models.py",
+  "sha256": "60a8cc5cd71bbd89d755fa4d8a1c35aa8893931c9590468d94e5d587501c851d",
+  "mtime_original": "2026-08-16T17:28:32"
+ },
+ {
+  "file": "source/forge/vlm/__init__.py",
+  "original": "carcara-forge/src/forge/vlm/__init__.py",
+  "sha256": "ae576b0d1d68d12cc25b0777143708b1f05a15d0e222b65b38be209398e85cd7",
+  "mtime_original": "2026-08-20T00:01:56"
+ },
+ {
+  "file": "source/forge/vlm/client.py",
+  "original": "carcara-forge/src/forge/vlm/client.py",
+  "sha256": "0c5cb97172d5b1b950144dd0fd82108663f9f265f055078486412ea3777b1002",
+  "mtime_original": "2026-08-20T00:02:54"
+ },
+ {
+  "file": "source/forge/vlm/phases.py",
+  "original": "carcara-forge/src/forge/vlm/phases.py",
+  "sha256": "4f901933d03337d7fc53b30c22d52a11d27c6fb273b2adff80d41327ba71cf1b",
+  "mtime_original": "2026-08-20T21:20:06"
+ },
+ {
+  "file": "source/forge/vlm/prepare.py",
+  "original": "carcara-forge/src/forge/vlm/prepare.py",
+  "sha256": "2d9d7c0a86e9e7667fe9960f6b49549c59bfbf987287b11ed7afff47c8661cbe",
+  "mtime_original": "2026-08-20T21:19:08"
+ },
+ {
+  "file": "source/forge/vlm/report.py",
+  "original": "carcara-forge/src/forge/vlm/report.py",
+  "sha256": "a9291118bfe15a1811e5a442b0689053e510455aed5d80aa0d6be84f6799c6cd",
+  "mtime_original": "2026-08-20T00:04:06"
+ }
+]

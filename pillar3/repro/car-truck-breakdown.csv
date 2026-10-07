@@ -1,0 +1,33 @@
+arm;label;proposed_class;gt_count;gt_never_proposed_added;gt_with_a_proposal;proposals_of_this_class;boxes_retained;correct;incorrect;not_recovered;precision_pct;coverage_over_class_gt_pct;reachable_recovery_over_class_with_proposal_pct;class_corrections_attempted;class_corrections_correct;class_corrections_incorrect;denominator_ok
+base_yolo;Base YOLO11x (sem VLM);car;427;133;294;304;304;208;96;219;68.4;48.7;70.7;0;0;0;True
+base_yolo;Base YOLO11x (sem VLM);truck;255;93;162;149;149;107;42;148;71.8;42.0;66.0;0;0;0;True
+base_yolo;Base YOLO11x (sem VLM);bus;23;11;12;18;18;10;8;13;55.6;43.5;83.3;0;0;0;True
+base_yolo;Base YOLO11x (sem VLM);motorcycle;13;8;5;2;2;1;1;12;50.0;7.7;20.0;0;0;0;True
+base_yolo;Base YOLO11x (sem VLM);person;10;6;4;9;9;3;6;7;33.3;30.0;75.0;0;0;0;True
+base_yolo;Base YOLO11x (sem VLM);train;3;0;3;16;16;0;16;3;0.0;0.0;0.0;0;0;0;True
+base_yolo;Base YOLO11x (sem VLM);bicycle;3;3;0;0;0;0;0;3;;0.0;;0;0;0;False
+base_yolo;Base YOLO11x (sem VLM);airplane;1;0;1;1;1;0;1;1;0.0;0.0;0.0;0;0;0;True
+vlm_single_v1;VLM single verdict (v1);car;427;133;294;304;255;192;63;235;75.3;45.0;65.3;1;0;1;True
+vlm_single_v1;VLM single verdict (v1);truck;255;93;162;149;139;107;32;148;77.0;42.0;66.0;5;0;4;True
+vlm_single_v1;VLM single verdict (v1);bus;23;11;12;18;15;9;6;14;60.0;39.1;75.0;1;0;1;True
+vlm_single_v1;VLM single verdict (v1);motorcycle;13;8;5;2;1;1;0;12;100.0;7.7;20.0;0;0;0;True
+vlm_single_v1;VLM single verdict (v1);person;10;6;4;9;7;3;4;7;42.9;30.0;75.0;0;0;0;True
+vlm_single_v1;VLM single verdict (v1);train;3;0;3;16;0;0;0;3;;0.0;0.0;0;0;0;True
+vlm_single_v1;VLM single verdict (v1);bicycle;3;3;0;0;0;0;0;3;;0.0;;0;0;0;False
+vlm_single_v1;VLM single verdict (v1);airplane;1;0;1;1;0;0;0;1;;0.0;0.0;0;0;0;True
+vlm_single_classfix_v3;VLM single + class correction (v3);car;427;133;294;304;255;192;63;235;75.3;45.0;65.3;1;1;0;True
+vlm_single_classfix_v3;VLM single + class correction (v3);truck;255;93;162;149;139;110;29;145;79.1;43.1;67.9;5;4;1;True
+vlm_single_classfix_v3;VLM single + class correction (v3);bus;23;11;12;18;16;11;5;12;68.8;47.8;91.7;2;2;0;True
+vlm_single_classfix_v3;VLM single + class correction (v3);motorcycle;13;8;5;2;1;1;0;12;100.0;7.7;20.0;0;0;0;True
+vlm_single_classfix_v3;VLM single + class correction (v3);person;10;6;4;9;7;3;4;7;42.9;30.0;75.0;0;0;0;True
+vlm_single_classfix_v3;VLM single + class correction (v3);train;3;0;3;16;0;0;0;3;;0.0;0.0;0;0;0;True
+vlm_single_classfix_v3;VLM single + class correction (v3);bicycle;3;3;0;0;0;0;0;3;;0.0;;0;0;0;False
+vlm_single_classfix_v3;VLM single + class correction (v3);airplane;1;0;1;1;0;0;0;1;;0.0;0.0;0;0;0;True
+vlm_decomposed_v2;VLM decomposed (v2);car;427;133;294;304;283;217;66;210;76.7;50.8;73.8;11;9;0;True
+vlm_decomposed_v2;VLM decomposed (v2);truck;255;93;162;149;142;118;24;137;83.1;46.3;72.8;15;12;1;True
+vlm_decomposed_v2;VLM decomposed (v2);bus;23;11;12;18;18;15;3;8;83.3;65.2;125.0;8;6;1;False
+vlm_decomposed_v2;VLM decomposed (v2);motorcycle;13;8;5;2;2;1;1;12;50.0;7.7;20.0;0;0;0;True
+vlm_decomposed_v2;VLM decomposed (v2);person;10;6;4;9;8;4;4;6;50.0;40.0;100.0;5;3;2;True
+vlm_decomposed_v2;VLM decomposed (v2);train;3;0;3;16;13;12;1;-9;92.3;400.0;400.0;13;12;0;False
+vlm_decomposed_v2;VLM decomposed (v2);bicycle;3;3;0;0;0;0;0;3;;0.0;;0;0;0;False
+vlm_decomposed_v2;VLM decomposed (v2);airplane;1;0;1;1;1;0;1;1;0.0;0.0;0.0;1;0;0;True

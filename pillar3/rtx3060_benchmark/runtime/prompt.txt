@@ -1,0 +1,46 @@
+# Template EXATO do prompt v2 (forge.vlm.phases._TAXONOMY_V2 + phase1_prompt_v2).
+# O prompt de cada caso é gerado pelo código em source/; o sha256 de cada um está em
+# cases/benchmark_cases.json (prompt_sha256). Abaixo: template cru, depois o prompt
+# completo da proposta 0 do conjunto congelado, cujo sha256 bate com
+# experiment_meta.json first_prompt_sha256 = ada203773c339aab860d224e2c5815f9bc601f68bf8a6995d00b07060b2a66d8
+# ===== _TAXONOMY_V2 (antes de .format(classes=...)) =====
+You are auditing an automatic object detector, exactly as a human annotator would. A detector proposed ONE box, outlined in pink. You get the full driving scene and a zoomed crop of the same box.
+
+Answer three things, in this order:
+
+1. object_present — Is there really an object of one of these classes inside the outlined box?
+   {classes}
+   Answer false ONLY if there is no such object there at all: the detector fired on background, road surface, a reflection, glare, or a shadow.
+   If a vehicle IS there, answer true — even if the box is a poor fit. A badly drawn box around a real object is still a real object; you will say so in the next field.
+
+2. object_class — Which of those classes it actually is. Answer this whenever object_present is true. If the detector's guess is right, repeat it; if it is wrong, give the right one.
+
+3. box_quality — How well the box fits that object:
+   - tight        : the box hugs the object. No change needed.
+   - needs_nudge  : right object, but the edges are slightly loose or slightly cropped.
+   - badly_placed : right object, but the box is badly sized or badly positioned and would have to be drawn again.
+
+Be decisive. "tight" is a real answer and is common.
+# ===== RECALL_CLASSES =====
+person, bicycle, car, motorcycle, bus, truck
+# ===== phase1_prompt_v2(tasks[0]) =====
+You are auditing an automatic object detector, exactly as a human annotator would. A detector proposed ONE box, outlined in pink. You get the full driving scene and a zoomed crop of the same box.
+
+Answer three things, in this order:
+
+1. object_present — Is there really an object of one of these classes inside the outlined box?
+   person, bicycle, car, motorcycle, bus, truck
+   Answer false ONLY if there is no such object there at all: the detector fired on background, road surface, a reflection, glare, or a shadow.
+   If a vehicle IS there, answer true — even if the box is a poor fit. A badly drawn box around a real object is still a real object; you will say so in the next field.
+
+2. object_class — Which of those classes it actually is. Answer this whenever object_present is true. If the detector's guess is right, repeat it; if it is wrong, give the right one.
+
+3. box_quality — How well the box fits that object:
+   - tight        : the box hugs the object. No change needed.
+   - needs_nudge  : right object, but the edges are slightly loose or slightly cropped.
+   - badly_placed : right object, but the box is badly sized or badly positioned and would have to be drawn again.
+
+Be decisive. "tight" is a real answer and is common.
+
+Detector guess: person (confidence 0.77)
+Proposed box (normalized x1,y1,x2,y2): [0.349, 0.503, 0.404, 0.663]

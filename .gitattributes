@@ -1,0 +1,2 @@
+# Preserve bytes exactly: several files are hash-bound (provenance, request fingerprints) or frozen.
+* -text

@@ -1,0 +1,300 @@
+// CarCará · Prisma schema for big_1hz (MongoDB)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// ============================
+// Counters
+// ============================
+
+model Visiter {
+  id         String @id @map("_id")
+  visitantes Int
+  @@map("VisitsCounter")
+}
+
+// ============================
+// Legacy: FilesProcessed (DAQ menu)
+// ============================
+
+model FilesProcessed {
+  id               String @id @map("_id")
+  FileName         String
+  Timestamp        String
+  GPS_x            String
+  GPS_y            String
+  City             String
+  Country          String
+  District         String
+  State            String
+  Street           String
+  IMU              String
+  OBII             String
+  Radar            String
+  Csv              String
+  Mf4              String
+  VIEW360          String @map("360VIEW")
+  CAM_Front_Center String
+  CAM_Front_Left   String
+  CAM_Front_Right  String
+  CAM_Rear_Center  String
+  CAM_Rear_Left    String
+  CAM_Rear_Right   String
+  Area             String
+  Misc             String
+  Period           String
+  RoadType         String @map("Road Type")
+  Traffic          String
+  Weather          String
+  @@map("FilesProcessed")
+}
+
+// ============================
+// Core: Big1Hz (telemetria por segundo)
+// ============================
+
+model Big1Hz {
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+
+  acq_id     Int?
+  acq_name   String?
+  acq_id_raw String?
+
+  sec        Int
+
+  block      BlockSub?
+  can        CanSub?
+  semseg     SemsegSub?
+  yolo       YoloDet[]
+  links      LinkFile[]
+
+  @@map("big_1hz")
+  @@index([acq_id, sec])
+  @@index([block.vehicle])
+  @@index([block.meteo.period])
+  @@index([block.meteo.condition])
+  @@index([can.VehicleSpeed])
+  @@index([can.SteeringWheelAngle])
+  @@index([can.BrakeInfoStatus])
+  @@index([semseg.building])
+  @@index([semseg.vegetation])
+  @@index([yolo.class])
+  @@index([yolo.rel_to_ego])
+  @@index([yolo.conf])
+  @@index([yolo.dist_m])
+}
+
+type BlockSub {
+  vehicle String?
+  meteo   MeteoSub?
+}
+
+type MeteoSub {
+  period    String?
+  condition String?
+}
+
+type CanSub {
+  GPS_x              Float?
+  GPS_y              Float?
+  GPS_z              Float?
+  VehicleSpeed       Float?
+  SteeringWheelAngle Float?
+  BrakeInfoStatus    String?
+}
+
+type SemsegSub {
+  building       Float?
+  vegetation     Float?
+  sidewalk_left  Float?
+  sidewalk_right Float?
+}
+
+type YoloDet {
+  frame_idx  Int?
+  fps        Float?
+
+  track_id   Int?
+  class      String?
+  conf       Float?
+
+  x1         Float?
+  y1         Float?
+  x2         Float?
+  y2         Float?
+  w          Float?
+  h          Float?
+
+  // Coordenadas normalizadas (0-1) + centro, vindas do YOLOfinal.csv
+  x1_n       Float?
+  y1_n       Float?
+  x2_n       Float?
+  y2_n       Float?
+  cx         Float?
+  cy         Float?
+  area_px    Float?
+
+  dist_m     Float?
+  geom_idx   Float?
+  rel_to_ego String?
+  in_frac    Float?
+
+  // ── Curadoria manual (todos opcionais, não-destrutivos) ──
+  det_id      String?    // id estável (uuid); atribuído lazy a originais tocados
+  source      String?    // null/"yolo11x" = original do modelo; "human_added" (added) | "human_corrected" (corrected/rejected/kept)
+  action      String?    // granularidade da entrada humana: "kept"|"corrected"|"added"|"rejected"
+  ref_det_id  String?    // entrada humana → det_id do original referenciado (null p/ "added")
+  reviewed    Boolean?   // true no ORIGINAL quando um humano agiu sobre ele
+  reviewed_by String?    // email do curador
+  reviewed_at DateTime?
+  // Leva de curadoria que produziu esta entrada humana. Uma leva == uma coleção.
+  // Sem isto a curadoria é GLOBAL por frame: `resolveGroundTruth` devolveria
+  // gabarito de levas diferentes sem distinguir origem, e a única separação
+  // possível seria inferir pelo collectionId do grupo — frágil, porque qualquer
+  // consulta que parta do frame mistura as levas. Só nas entradas humanas;
+  // detecção original do modelo não tem leva.
+  collection_id String?
+  // Rodada de revisao desta entrada humana (null == 1, gabarito original).
+  // PRECISA estar declarado aqui: o Prisma serializa composite arrays SO com os campos
+  // do tipo — um campo nao declarado e descartado em silencio na escrita, e a entrada
+  // voltaria a ser lida como round 1, contaminando o gabarito travado.
+  review_round  Int?
+}
+
+type LinkFile {
+  ext  String?
+  link String?
+}
+
+// ============================
+// Auth: Users
+// ============================
+
+model User {
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  name         String?
+  email        String       @unique
+  passwordHash String
+  createdAt    DateTime     @default(now())
+
+  collections  Collection[]
+}
+
+// ============================
+// Collections (favoritos do usuário)
+// ============================
+
+model Collection {
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String            @db.ObjectId
+  user            User              @relation(fields: [userId], references: [id])
+  name            String
+  description     String?
+  createdAt       DateTime          @default(now())
+  gps_spacing_m   Float?
+  framesCount     Int               @default(0)
+  train_acq_ids   String[]
+  test_acq_ids    String[]
+
+  // ── Curadoria: metadados da trava do conjunto de teste ──
+  curation_locked         Boolean   @default(false)
+  curation_min_distance_m Float?    // distância escolhida pela busca binária (auditoria)
+  curation_frame_count    Int?      // tamanho final do conjunto travado
+  curation_generated_at   DateTime?
+  curation_generated_by   String?   // email
+
+  // ── Rodada de revisao humana desta colecao ──
+  // null/1 = gabarito original (round 1). 2 = segundo anotador, cego ao round 1.
+  // As entradas humanas vivem em Big1Hz.yolo (GLOBAL por frame), entao o round e o
+  // UNICO isolamento entre anotadores: filtra leitura e restringe sobrescrita.
+  review_round            Int?      // null == 1
+  source_collection_id    String?   // colecao de origem, quando esta e uma re-anotacao
+
+  groups          CollectionGroup[]
+}
+
+model CollectionGroup {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  collectionId String     @db.ObjectId
+  collection   Collection @relation(fields: [collectionId], references: [id])
+  acq_id       String
+  secs         Int[]
+  activeSecs   Int[]
+  curationSecs Int[]   // conjunto de teste TRAVADO (subconjunto de secs). Só grupos de teste.
+  reviewedSecs Int[]   // progresso: subconjunto de curationSecs já revisado
+
+  @@unique([collectionId, acq_id])
+  @@index([collectionId])
+  @@map("collection_groups")
+}
+
+// ============================
+// Links (arquivos por aquisição)
+// ============================
+
+model Links {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  acq_id String
+  sec    Int?
+  ext    String
+  link   String
+
+  @@map("links")
+}
+
+// ============================
+// LLM Results & Evaluations
+// ============================
+
+model LLMResult {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+
+  collectionId String   @map("collectionId")
+
+  acq_id       String
+
+  centerSec    Int      @map("center_sec")
+  secs         Int[]    @map("secs")
+
+  testName     String   @map("test_name")
+  llmModel     String   @map("llm_model")
+  promptType   String   @map("prompt_type")
+
+  prompt       String?  @map("prompt_text")
+  response     String?  @map("answer")
+  totalTokens  Int?     @map("total_tokens")
+  latencyMs    Int?     @map("response_time_s")
+
+  createdAt    DateTime @default(now())
+}
+
+model LLMTestEval {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+
+  collectionId String   @map("collectionId")
+
+  userEmail    String   @map("user_email")
+  userName     String   @map("user_name")
+
+  acq_id       String
+  sec          Int
+
+  testName     String   @map("test_name")
+  llmModel     String   @map("llm_model")
+  promptType   String   @map("prompt_type")
+
+  test1        Int
+  test2        Int
+  test3        Int
+  test4        Int
+  test5        Int
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

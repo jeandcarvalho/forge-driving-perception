@@ -1,0 +1,133 @@
+% =====================================================================
+% Ficha de runtime/configuracao do VLM, pronta para o paper
+% Fontes: meta.json dos 3 runs, manifesto do Ollama, src/forge/config.py,
+%         src/forge/vlm/client.py, src/forge/vlm/prepare.py
+% Consolidado em paper/repro/vlm-runtime-config.json (2026-09-07)
+%
+% REGRA APLICADA: so entra como fato o que esta REGISTRADO no artefato.
+% O que nao foi registrado esta marcado "not recorded" e NAO foi inferido
+% a partir da maquina atual.
+% =====================================================================
+
+\begin{table}[t]
+\centering
+\caption{Vision--language model configuration, shared by all three curation
+arms. Every value is taken from the run metadata, the served model manifest, or
+the pinned source constants; fields the run did not record are marked as such
+rather than reconstructed.}
+\label{tab:vlmconfig}
+\small
+\begin{tabular}{ll}
+\toprule
+\multicolumn{2}{l}{\textbf{Model}} \\
+Model            & Qwen3-VL-8B-Instruct (\texttt{qwen3-vl:8b-instruct}) \\
+Tag digest       & \texttt{sha256:0533d743\ldots f8c96319} \\
+Weights digest   & \texttt{sha256:1329cd5a\ldots e6c82466} (6{,}140{,}392{,}672 B) \\
+Format           & GGUF \\
+Quantisation     & Q4\_K\_M \\
+Parameter count  & 8.8\,B (as declared by the model manifest) \\
+Model licence    & Apache-2.0 \\
+Variant          & instruct (not the \emph{thinking} variant) \\
+\midrule
+\multicolumn{2}{l}{\textbf{Runtime}} \\
+Framework        & Ollama, \texttt{POST /api/chat}, non-streaming \\
+Runtime version  & \textbf{not recorded in any run}; the installed client
+                   reports 0.32.15 (see note) \\
+Request timeout  & 300\,s \\
+Concurrency      & 1 (\texttt{OLLAMA\_NUM\_PARALLEL=1}, serial synchronous calls) \\
+Constrained decoding & JSON schema supplied in the \texttt{format} field \\
+\midrule
+\multicolumn{2}{l}{\textbf{Sampling}} \\
+Temperature      & 0.0 (the only option overridden by the client) \\
+top\_p           & 0.95 (model default; not overridden) \\
+top\_k           & 20 (model default; not overridden) \\
+Seed             & none sent \\
+Repeat penalty   & not set (runtime default; not recorded) \\
+Max tokens       & not set (runtime default; not recorded) \\
+Context length   & not set (runtime default; not recorded) \\
+\midrule
+\multicolumn{2}{l}{\textbf{Visual input}} \\
+Images per call  & 2 \\
+Image 1          & full frame, $1920\times1080$, proposed box drawn \\
+Image 2          & padded crop around the box, box drawn inside it \\
+Resizing         & none on the full frame; crops smaller than 224\,px are
+                   upsampled (Lanczos) \\
+Crop padding     & 0.6 of the box's longer side \\
+Encoding         & JPEG, quality 92, base64 \\
+Box drawn on image & yes (5\,px black outline, 3\,px magenta) \\
+Coordinates in text & yes, in addition to the drawing \\
+Coordinate format & normalised $[x_1,y_1,x_2,y_2]$, 3 decimals, origin top-left \\
+\midrule
+\multicolumn{2}{l}{\textbf{Protocol}} \\
+Granularity      & one call per \emph{proposal}, not per frame \\
+Proposals        & 501, over 313 frames from 127 acquisitions \\
+Retries          & none; a failed call raises and is counted, never substituted \\
+\midrule
+\multicolumn{2}{l}{\textbf{Hardware}} \\
+GPU              & NVIDIA GeForce RTX 5060 Ti (recorded for arms v1 and v2;
+                   \textbf{not recorded} for v3) \\
+Compute capability & 12.0 (v1, v2) \\
+VRAM             & \textbf{not recorded in any run} \\
+CPU              & \textbf{not recorded in any run} \\
+System RAM       & \textbf{not recorded in any run} \\
+OS               & Windows, build 10.0.26200, x86-64 (all three runs) \\
+Python           & 3.11.9 (all three runs) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ---------------------------------------------------------------------
+% Tabela de diferencas e custo por braco
+% ---------------------------------------------------------------------
+\begin{table}[t]
+\centering
+\caption{Per-arm differences and measured cost. The three arms share model,
+sampling, images and protocol; they differ only in the prompt function and the
+output schema. Arm v3 was executed in three resumed sessions from a per-proposal
+checkpoint, so its recorded usage covers only the final session.}
+\label{tab:vlmarms}
+\small
+\begin{tabular}{lccc}
+\toprule
+ & v1 single & v3 single $+$ class & v2 decomposed \\
+\midrule
+Prompt function      & \texttt{phase1\_prompt} & \texttt{phase1\_prompt} (same) & \texttt{phase1\_prompt\_v2} \\
+Schema               & v1 & v3 & v2 \\
+\texttt{verdict} field in schema & yes & yes & no (derived in code) \\
+Rows written         & 505 & 501 & 501 \\
+Scored on            & 501 & 501 & 501 \\
+Calls                & 505 & 501 (50 in final session) & 501 \\
+Failures             & 0 & 0 & 0 \\
+Prompt tokens        & 1{,}742{,}808 & 170{,}681$^\dagger$ & 1{,}738{,}381 \\
+Generated tokens     & 19{,}355 & 2{,}545$^\dagger$ & 42{,}558 \\
+Wall-clock           & 2{,}125.3\,s & 209.1\,s$^\dagger$ & 2{,}442.4\,s \\
+Seconds per call     & 4.21 & 4.18 & 4.88 \\
+\bottomrule
+\multicolumn{4}{l}{\scriptsize $^\dagger$ final session only; the arm was resumed
+from a checkpoint and total cost is not recoverable from a single artefact.} \\
+\end{tabular}
+\end{table}
+
+% ---------------------------------------------------------------------
+% NOTAS OBRIGATORIAS
+% ---------------------------------------------------------------------
+% Runtime version. Nenhum meta.json registra a versao do Ollama. O binario
+% instalado reporta 0.32.15 e seu mtime e 2026-08-20 00:41 local. O run v1
+% comecou as 00:11 do mesmo dia, ANTES desse mtime, entao a versao usada em v1
+% NAO e recuperavel. Os runs v2 (2026-08-20 21:28) e v3 (2026-09-07 13:48) sao
+% posteriores e consistentes com 0.32.15, mas isso e inferencia por data de
+% arquivo, nao registro. Se a versao precisar ir no paper, ou se declara
+% "not recorded", ou o dono confirma.
+%
+% Pesos. O blob de pesos e o manifesto tem mtime 2026-08-19 23:55, anterior aos
+% tres runs e inalterado desde entao: os tres bracos foram servidos pelo MESMO
+% arquivo de pesos. Evidencia por mtime, nao por registro no run.
+%
+% Hardware. GPU aparece em environment.cuda.device nos metas de v1 e v2. O meta
+% de v3 nao tem bloco cuda nenhum (o script rodou fora do CLI). VRAM, CPU e RAM
+% nao aparecem em nenhum run. NAO reconstituir a partir da maquina atual.
+%
+% top_p / top_k. Vem do Modelfile do modelo servido; o cliente so sobrescreve
+% temperature. Com temperature 0 sao inertes na pratica, mas estavam em efeito
+% e por isso sao reportados. Nao aparecem em nenhum meta.json - foram lidos do
+% manifesto do Ollama em 2026-09-07.
